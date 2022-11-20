@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'tk_basdat',
+    'sirest_b09',
+    'pengguna',
 ]
 
 MIDDLEWARE = [

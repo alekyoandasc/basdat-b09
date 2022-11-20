@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1 class="pb-5 pt-5">Register sebagai:</h1>
+    <div class="d-flex justify-content-center">
+        <a href="/pengguna/regis_admin" class="button" style="width: 140px;">
+            <button type="button" class="btn btn-outline-warning">Admin</button>
+        </a>
+        <h4 style="width: 90px;"></h4>
+        <a href="/pengguna/regis_pelanggan" class="button" style="width: 140px;">
+            <button type="button" class="btn btn-outline-warning">Pelanggan</button>
+        </a>
+        <h4 style="width: 90px;"></h4>
+        <a href="/pengguna/regis_restoran" class="button" style="width: 140px;">
+            <button type="button" class="btn btn-outline-warning">Restoran</button>
+        </a>
+        <h4 style="width: 90px;"></h4>
+        <a href="/pengguna/regis_kurir" class="button" style="width: 140px;">
+            <button type="button" class="btn btn-outline-warning">Kurir</button>
+        </a>
+    </div>
+</body>
+</html>
+{% endblock content %}

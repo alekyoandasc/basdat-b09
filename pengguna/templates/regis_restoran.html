@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Register Restoran</title>
+      </head>
+      <body>
+            <form method="POST" id="userForm" action="{% url 'regis_restoran' %}" class="needs-validation container" novalidate>
+                  <div class="logo">
+                        <h3>SIREST-B09</h3>
+                  </div>
+                  <h3>FORM REGISTRASI RESTORAN</h3>
+                  <div class="icons" style="display: none;">
+                        {% for form in forms %}
+                        <label class="icon" for='{{form.id_for_label}}'></label>
+                        {% endfor %}
+                  </div>
+                  <h6 id="checkbox_message"></h6>
+                  {% csrf_token %}
+                  {{ restoran_form.as_p }}
+                  {% for form in forms %}
+                  <div class="col">
+                        <label for="{{form.id_for_label}}" class="form-label">{{form.label}}</label>
+                        <div class="input-group has-validation">
+                              <span class="input-group-text" id="inputGroupPrepend" style="border-radius: 10px 0 0 10px;">
+                                    <label for="{{form.id_for_label}}"><div id="label_{{form.id_for_label}}"></div></label></span>
+
+                              {{form}}
+
+                              {% if form.label == "Password" %}
+                              <div id="password-eye" style="position: absolute; top: 7px; right: 30px; z-index: 1000; "><i class="bi bi-eye-slash-fill"></i></div>
+                              {% endif %}
+
+                              <div class="invalid-feedback">
+                                    {% if form.label == 'Email' %}
+                                          Email anda tidak valid
+                                    {% else %}
+                                          Bagian ini tidak boleh kosong
+                                    {% endif %}
+                              </div>
+                        </div>
+                  </div>
+                  {% endfor %}
+                  <button type="submit"><span>DAFTAR</span></button>
+                  <h5>Sudah Punya Akun? Silahkan <a href="#">Login</a></h5>
+            </form>
+      </body>
+</html>
