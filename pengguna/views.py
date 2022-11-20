@@ -11,6 +11,20 @@ from .forms import AdminForm, PelangganForm, RestoranForm, KurirForm
 from json import dumps
 
 # Create your views here.
+
+def homepage(request):
+      return render(request, "home.html")
+
+def login_pengguna(request):
+      if request.method == "POST":
+            # TODO: Validasi autentikasi
+            return redirect('index')
+      return render(request, 'login.html')
+
+def logout_pengguna(request):
+      # TODO: Logout pengguna
+      return redirect('index')
+
 def regis_admin(request):
       registered = False
       if request.method == 'POST':
@@ -79,4 +93,5 @@ def regis_kurir(request):
       return render(request, 'regis_kurir.html',
             {'kurir_form':kurir_form,
             'registered': registered})
+
 
