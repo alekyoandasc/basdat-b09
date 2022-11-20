@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
 <html lang="en">
 
@@ -16,7 +16,7 @@
       <h1 class="pb-5 pt-5">Selamat datang di SIREST-B09</h1>
       {% if role == "" %}
       <div class="d-flex justify-content-center">
-        <a href="#" class="button" style="width: 140px;">
+        <a href="{% url 'login_pengguna' %}" class="button" style="width: 140px;">
             <button type="button" class="btn btn-outline-warning">Login</button>
         </a>
         <h4 style="width: 90px;"></h4>
