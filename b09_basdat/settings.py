@@ -137,8 +137,8 @@ MEDIA_URL = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
-    directory.mkdir(exist_ok=True)
+# for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
+#     directory.mkdir(exist_ok=True)
     
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
