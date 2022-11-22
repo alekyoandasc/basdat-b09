@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'tk_basdat',
     'sirest_b09',
     'pengguna',
+    'restopay',
+    'jam_operasional',
+    'transaksi_pesanan_restoran',
+    'tarif_pengiriman_per_km',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +129,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
