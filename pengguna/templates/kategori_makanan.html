@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Kategori Makanan</h1>
+<ul>
+{% for kategori in kategori %}
+<li>{{kategori.name}}</li>
+<a href="{% url 'delete_kategori_makanan' kategori.id %}">Delete</a>
+
+{% endfor %}
+</ul>
+{% endblock content %}

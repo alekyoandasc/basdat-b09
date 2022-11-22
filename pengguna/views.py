@@ -6,7 +6,7 @@ from django import forms
 from django.template import RequestContext
 from django.contrib.auth import authenticate
 
-from sirest_b09.models import Admin, Pelanggan, Restoran, Kurir
+from sirest_b09.models import *
 from .forms import AdminForm, PelangganForm, RestoranForm, KurirForm
 from json import dumps
 
@@ -95,3 +95,13 @@ def regis_kurir(request):
             'registered': registered})
 
 
+def show_kategori_makanan(request):
+      context = {
+            'kategori' : KategoriMakanan.objects.all().values(),
+      }
+      return render(request, 'kategori_makanan.html', context)
+
+def delete_kategori_makanan(request, kategori_id):
+      kategori_makanan = KategoriMakanan.objects.get(id = kategori_id)
+      kategori_makanan.delete()
+      return redirect('show_kategori_makanan')
