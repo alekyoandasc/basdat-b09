@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+{% block content %}
+<title>RestoPay</title>
+  <div class="container">
+    <h3>FORM TARIK SALDO</h3>
+    <form method="post" action="">
+        {% csrf_token %}
+        
+        <!-- <div class="input-group mb-3">
+          <label class="input-group-text" for="">Saldo saat ini: </label>
+          <select name='' class="form-select" id="">
+            <option value="">--Select--</option>
+            {% for saldo in restopay %}
+              <option value="{{ bibit.nama }}"> {{bibit.nama}} </option>
+            {% endfor %}
+          </select> -->
+          <div class="form-group">
+            <label for="saldonow">Saldo saat ini: Rp0,- </label>
+            <input type="text" class="form-control" id="" name="" placeholder="-" disabled>
+          </div>
+        <!-- </div> -->
+        <div class="form-group">
+          <label for="nominal">Nominal Penarikan: </label>
+          <input type="text" class="form-control" id="nominal" name="nominal" placeholder="Masukkan Nominal Penarikan">
+        </div>
+        <br>
+        <div class="input-group mb-3">
+            <h6>ke:</h6>
+            <label class="input-group-text" for="">Nama Bank: </label>
+            <select name='' class="form-select" id="">
+              <option value="">--Select--</option>
+            </select><br>
+            <label class="input-group-text" for="">Nomor Rekening: </label>
+            <select name='' class="form-select" id="">
+              <option value="">--Select--</option>
+            </select>
+          </div>
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary btn-am">SIMPAN</button>
+    </form>
+
+  </div>
+{% endblock content %}
+

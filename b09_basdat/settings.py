@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'tk_basdat',
     'sirest_b09',
     'pengguna',
+    'restopay',
+    'jam_operasional',
+    'transaksi_pesanan_restoran',
 ]
 
 MIDDLEWARE = [
