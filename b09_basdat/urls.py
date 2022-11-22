@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tk_basdat.urls')),
     path('pengguna/', include('pengguna.urls')),
-
+    path('riwayat_dan_promo/', include('riwayat_dan_promo.urls'))
 ]

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="d-flex flex-column justify-content-center">
+        <h1>Daftar Promo Restoran</h1>
+        <a style="margin: auto;"href="{% url 'riwayat_dan_promo:tambah_promo_restoran' %}">[Tambah]</a>
+        <table style="margin-left:auto; margin-right: auto;">
+            <thead>
+                <th>No</th>
+                <th>Nama Promosi</th>
+                <th>Periode Promosi</th>
+                <th>Aksi</th>
+            </thead>
+            <tbody>
+                {% for promo in daftar_promo%}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ promo.nama_promo }}</td>
+                    <td> 2022-08-15 s.d. 2022-08-20 </td>
+                    <td></td>
+                    <td>
+                        <a href="/riwayat_dan_promo/promo_restoran/{{promo.id}}">[Detail]</a> 
+                        <br>
+                        <a href="/riwayat_dan_promo/ubah_promo_restoran/{{promo.id}}">[Ubah]</a>
+                        <br>
+                        <a href="/hapus">
+                            [Hapus]
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    </div>
+    
+</body>
+</html>
+{% endblock content %}

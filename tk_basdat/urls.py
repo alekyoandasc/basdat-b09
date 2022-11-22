@@ -8,5 +8,5 @@ urlpatterns = [
       path('', index, name='index'),
       path('', index, name='tk_basdat'),
       path('register', register, name='register'),
-
+      
 ]

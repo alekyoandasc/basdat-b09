@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>POV PELANGGAN</h1>
+    <table>
+        <thead>
+            <th>No</th>
+            <th>Restoran</th>
+            <th>Nama Kurir</th>
+            <th>Waktu Pesanan Dibuat</th>
+            <th>Status Pesanan</th>
+            <th>Rating</th>
+            <th>Aksi</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Warung Mantap Depok</td>
+                <td>Doni Suryana</td>
+                <td>2022-11-04 11:30:05</td>
+                <td>Pesanan Selesai</td>
+                <td></td>
+                <td>
+                    <a href="/riwayat_dan_promo/detail/1">[Detail]</a> 
+                    <br>
+                    <a href="/riwayat_dan_promo/nilai/1">[Nilai]</a>
+                </td>
+            </tr>
+            {% for transaksi in daftar_transaksi%}
+            <tr>
+                <td>{{transaksi}}</td>
+                <td>Warung Mantap Depok</td>
+                <td>Doni Suryana</td>
+                <td>2022-11-04 11:30:05</td>
+                <td>Pesanan Selesai</td>
+                <td></td>
+                <td>
+                    <a href="/riwayat_dan_promo/detail/1">[Detail]</a> 
+                    <br>
+                    <a href="/riwayat_dan_promo/nilai/1">[Nilai]</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>POV RESTORAN</h1>
+    <table>
+        <thead>
+            <th>No</th>
+            <th>Nama Pelanggan</th>
+            <th>Nama Kurir</th>
+            <th>Waktu Pesanan Dibuat</th>
+            <th>Status Pesanan</th>
+            <th>Rating</th>
+            <th>Aksi</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mikayla Putr</td>
+                <td>Doni Suryana</td>
+                <td>2022-11-04 11:30:05</td>
+                <td>Pesanan Selesai</td>
+                <td></td>
+                <td>
+                    <a href="/riwayat_dan_promo/detail/1">[Detail]</a> 
+                    <br>
+                    <a href="/riwayat_dan_promo/nilai/1">[Nilai]</a>
+                </td>
+            </tr>
+            {% for transaksi in daftar_transaksi%}
+            <tr>
+                <td>{{transaksi}}</td>
+                <td>Mikayla Putr</td>
+                <td>Doni Suryana</td>
+                <td>2022-11-04 11:30:05</td>
+                <td>Pesanan Selesai</td>
+                <td></td>
+                <td>
+                    <a href="/riwayat_dan_promo/detail/1">[Detail]</a> 
+                    <br>
+                    <a href="/riwayat_dan_promo/nilai/1">[Nilai]</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>POV KURIR</h1>
+    <table>
+        <thead>
+            <th>No</th>
+            <th>Restoran - Cabang</th>
+            <th>Nama Pelanggan</th>
+            <th>Waktu Pesanan Dibuat</th>
+            <th>Status Pesanan</th>
+            <th>Rating</th>
+            <th>Aksi</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Warung Mantap Depok</td>
+                <td>Mikayla Putr</td>
+                <td>2022-11-04 11:30:05</td>
+                <td>Pesanan Selesai</td>
+                <td></td>
+                <td>
+                    <a href="/riwayat_dan_promo/detail/1">[Detail]</a> 
+                    <br>
+                    <a href="/riwayat_dan_promo/nilai/1">[Nilai]</a>
+                </td>
+            </tr>
+            {% for transaksi in daftar_transaksi%}
+            <tr>
+                <td>{{transaksi}}</td>
+                <td>Warung Mantap Depok</td>
+                <td>Mikayla Putr</td>
+                <td>2022-11-04 11:30:05</td>
+                <td>Pesanan Selesai</td>
+                <td></td>
+                <td>
+                    <a href="/riwayat_dan_promo/detail/1">[Detail]</a> 
+                    <br>
+                    <a href="/riwayat_dan_promo/nilai/1">[Nilai]</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock content %}
