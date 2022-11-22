@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'sirest_b09',
     'pengguna',
     'riwayat_dan_promo',
+    'restopay',
+    'jam_operasional',
+    'transaksi_pesanan_restoran',
 ]
 
 MIDDLEWARE = [
