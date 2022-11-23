@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container">
     <h3 class="text-center">FORM BUAT TARIF PENGIRIMAN PER KM</h3>
-    <form method="post" action="{% url 'tarif_pengiriman_per_km:read' %}">
+    <form method="post" action="{% url 'tarif_pengiriman_per_km:create' %}">
         {% csrf_token %}
         <div class="form-group">
             <label for="provinsi">Provinsi: </label>
