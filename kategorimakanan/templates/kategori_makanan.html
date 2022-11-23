@@ -3,16 +3,26 @@
 {% block content %}
 <h1>Kategori Makanan</h1>
 
-<table style="border: 1px solid black; border-radius: 10px;">
-    <tr>
-        <th>Nama Kategori Makanan</th>
-        <th>Aksi</th>
-    </tr>
-    {% for i in kategori %}
-    <tr>
-        <td>{{i.name}}</td>
-        <td> <a href="{% url 'delete_kategori_makanan' i.id %}">Delete</a> </td>
-    </tr>
-    {% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nama Kategori Makanan</th>
+            <th scope="col">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Snack</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Minuman</td>
+            <td><button class="btn btn-primary">Delete</button></td>
+        </tr>
+    </tbody>
+
 </table>
 {% endblock content %}

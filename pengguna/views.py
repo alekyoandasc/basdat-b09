@@ -95,14 +95,3 @@ def regis_kurir(request):
             {'kurir_form':kurir_form,
             'registered': registered})
 
-
-def show_kategori_makanan(request):
-      context = {
-            'kategori' : KategoriMakanan.objects.all().values(),
-      }
-      return render(request, 'kategori_makanan.html', context)
-
-def delete_kategori_makanan(request, kategori_id):
-      kategori_makanan = KategoriMakanan.objects.get(id = kategori_id)
-      kategori_makanan.delete()
-      return redirect('show_kategori_makanan')

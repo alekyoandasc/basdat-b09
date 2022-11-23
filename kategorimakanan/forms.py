@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from .models import *
+from kategorimakanan.models import *
 
 
-class KategoriMakananForm(ModelForm):
-    class Meta:
-        model = KategoriMakanan
-        fields = ['name']
+# class KategoriMakananForm(ModelForm):
+#     class Meta:
+#         model = KategoriMakananCustom
+#         fields = ['name']
