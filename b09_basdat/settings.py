@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'jam_operasional',
     'transaksi_pesanan_restoran',
     'tarif_pengiriman_per_km',
+    'restoran',
 ]
 
 MIDDLEWARE = [
