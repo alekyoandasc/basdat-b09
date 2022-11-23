@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Form pengisian alamat pemesanan makanan</h1>
+<form action="{% url 'show_pemilihan_restoran' %}">
+    <label for="Jalan">Jalan : </label>
+    <input type="text" id="Jalan" name="Jalan"><br><br>
+    <label for="Kecamatan">Kecamatan : </label>
+    <input type="text" id="Kecamatan" name="Kecamatan"><br><br>
+    <label for="Kota">Kota : </label>
+    <input type="text" id="Kota" name="Kota"><br><br>
+    <label for="Provinsi">Provinsi : </label>
+    <select id="Provinsi" name="Provinsi">
+        <option value="Jawa Barat">Jawa Barat</option>
+        <option value="DKI Jakarta">DKI Jakarta</option>
+    </select>
+    <input type="submit" value="Submit">
+  </form>
+
+{% endblock content %}

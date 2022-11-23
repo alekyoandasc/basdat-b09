@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" action="{% url 'add_kategori_makanan' %}">
+    {% csrf_token %}
+
+    {{form.as_table}}
+
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock content %}
