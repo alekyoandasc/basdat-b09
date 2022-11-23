@@ -44,11 +44,12 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              RestoPay
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/lumbung/lumbung-admin">Template</a></li>
-              <li><a class="dropdown-item" href="/transaksi-upgrade-lumbung">Template</a></li>
+              <li><a class="dropdown-item" href="/restopay/lihat-saldo">Lihat Saldo</a></li>
+              <li><a class="dropdown-item" href="/restopay/add-saldo">Isi Saldo</a></li>
+              <li><a class="dropdown-item" href="/restopay/tarik-saldo">Tarik Saldo</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -60,10 +61,10 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              Jam Operasional
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/paket-koin/paket_koin/create">Template</a></li>
+              <li><a class="dropdown-item" href="/jam-operasional/create">Buat Jam Operasional</a></li>
               <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Template</a></li>
               <li><a class="dropdown-item" href="/paket-koin/transaksi/read">Template</a></li>
             </ul>
@@ -77,10 +78,10 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              Transaksi Pesanan Restoran
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/aset/buat">Template</a></li>
+              <li><a class="dropdown-item" href="/transaksi-pesanan-restoran/read">Daftar Transaksi Pesanan</a></li>
               <li><a class="dropdown-item" href="/aset">Template</a></li>
               <li><a class="dropdown-item" href="#">Template</a></li>
               <li><a class="dropdown-item" href="#">Template</a></li>
@@ -97,11 +98,11 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              Tarif Pengiriman per KM
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/koleksi-aset">Template</a></li>
-              <li><a class="dropdown-item" href="/transaksi-pembelian-aset">Template</a></li>
+              <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:create' %}">Buat Tarif Pengiriman per KM</a></li>
+              <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:read' %}">Lihat Tarif Pengiriman per KM</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -113,13 +114,10 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              Restoran
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/produk/create-produk">Template</a></li>
-              <li><a class="dropdown-item" href="/produk/produk-admin">Template</a></li>
-              <li><a class="dropdown-item" href="#">Template</a></li>
-              <li><a class="dropdown-item" href="/produksi/produksi-admin">Template</a></li>
+              <li><a class="dropdown-item" href="{% url 'restoran:read_daftar_restoran' %}">Daftar Restoran</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -131,7 +129,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              Kategori Makanan
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="/histori-produksi-hewan">Template</a></li>
@@ -148,7 +146,109 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Template
+              Transaksi Pesanan Pelanggan
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Kategori Restoran
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Transaksi Pesanan Kurir
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Bahan Makanan
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Riwayat Transaksi Pesanan
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Promo
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/pesanan">Template</a></li>
+              <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Promo Restoran
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
@@ -167,15 +267,6 @@
 
     {% endblock content %}
     </div>
-    <!-- <div class="container mt-auto">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-muted">&copy; 2022 CHRONOS, TK BASDAT B08</p>
-
-        <ul class="nav col-me-4 justify-content-end">
-          <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
- 
-        </ul>
-      </footer> -->
     </div>
   </body>
 </html>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+{% load static %}
+
+{% block content %}
+<title>Ubah Jam Operasional</title>
+  <div class="container">
+    <h3>Form Ubah Jam Operasional</h3>
+    <form method="post" action="{% url 'read' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="hari">Hari: {{hari}}</label>
+            <input type="text" class="form-control" id="day" name="day" placeholder="-" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="jam_buka">Jam Buka: </label>
+            <input type="time" class="form-control" id="starttime" name="starttime" placeholder="Silakan masukkan jam buka" required>
+        </div>
+        <div class="form-group">
+            <label for="jam_tutup">Jam Tutup: </label>
+            <input type="time" class="form-control" id="endtime" name="endtime" placeholder="Silakan masukkan jam tutup" required>
+        </div>
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+        <br>
+        <button type="submit" class="btn btn-primary btn-am">SIMPAN</button>
+    </form>
+
+  </div>
+{% endblock content %}

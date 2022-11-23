@@ -20,5 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tk_basdat.urls')),
     path('pengguna/', include('pengguna.urls')),
-
+    path('restopay/', include('restopay.urls')),
+    path('jam-operasional/', include('jam_operasional.urls')),
+    path('transaksi-pesanan-restoran/', include('transaksi_pesanan_restoran.urls')),
+    path('tarif-pengiriman-per-km/', include('tarif_pengiriman_per_km.urls')),
+    path('restoran/', include("restoran.urls")),
 ]

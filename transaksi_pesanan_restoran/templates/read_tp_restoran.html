@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+{% block content %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Transaksi Pesanan Restoran</title>
+  </head>
+  <body>
+    <div class="container"  style="padding: 50px">
+      <div class="row">
+        <div class="my-auto d-flex justify-content-center mb-4" style="width:2000px;">
+          <h1>DAFTAR PESANAN BERLANGSUNG</h1>
+        </div>
+        <table class="table">
+          <tr>
+            <th>No</th>
+            <th>Nama Pelanggan</th>
+            <th>Waktu Pesanan Dibuat</th>
+            <th>Status Pesanan</th>
+            <th>Aksi</th>
+          </tr>
+
+          {% for tp_restoran in hasil %}
+          <tr>
+            <td> {{ tp_restoran.no }} </td>
+            <td> {{ tp_restoran.nama }} </td>
+            <td> {{ tp_restoran.waktu }} </td>
+            <td> {{ tp_restoran.status }} </td>
+            <td>
+                <div class="mb-3">
+                  <a href=''>
+                        <button class="btn btn-outline-secondary">Detail</button>
+                  </a>
+                  <!-- if status pesanan menunggu konfirmasi -->
+                  <a href='#'>
+                        <button class="btn btn-outline-secondary">Konfirmasi</button>
+                  </a>
+                  <!-- if status pesanan dibuat -->
+                  <a href='#'>
+                        <button class="btn btn-outline-secondary">Kirim</button>
+                  </a>
+            </div>
+            </td>
+          </tr>
+          {% endfor %}
+          <!-- END SECTION -->
+        </table>
+      </div>
+    </div>
+    {% include 'footer.html' %}
+  </body>
+</html>
+{% endblock content %}
+
