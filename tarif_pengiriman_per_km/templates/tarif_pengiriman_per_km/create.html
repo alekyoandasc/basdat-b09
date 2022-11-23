@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Buat Tarif Pengiriman per KM</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-center">FORM BUAT TARIF PENGIRIMAN PER KM</h3>
+    <form method="post" action="{% url 'tarif_pengiriman_per_km:create' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="provinsi">Provinsi: </label>
+            <input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="Silakan isi nama provinsi" required>
+        </div>
+        <div class="form-group">
+            <label for="tarif_motor">Tarif Motor: </label>
+            <input type="number" min="2000" max="7000" class="form-control" id="tarif_motor" name="tarif_motor" placeholder="Silakan isi besar tarif motor" required>
+        </div>
+        <div class="form-group">
+            <label for="tarif_mobil">Tarif Mobil: </label>
+            <input type="number" min="2000" max="7000" class="form-control" id="tarif_mobil" name="tarif_mobil" placeholder="Silakan isi besar tarif mobil" required>
+        </div>
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+        <br>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary btn-am">SIMPAN</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
