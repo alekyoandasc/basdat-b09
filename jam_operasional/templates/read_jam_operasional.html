@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+{% block content %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Daftar Jam Operasional</title>
+  </head>
+  <body>
+    <div class="container"  style="padding: 50px">
+      <div class="row">
+        <div class="my-auto d-flex justify-content-center mb-4" style="width:2000px;">
+          <h1>DAFTAR JAM OPERASIONAL</h1>
+        </div>
+        <table class="table">
+          <tr>
+            <th>No</th>
+            <th>Hari</th>
+            <th>Jam Buka</th>
+            <th>Jam Tutup</th>
+            <th>Aksi</th>
+          </tr>
+
+          {% for jam_ope in hasil %}
+          <tr>
+            <td> {{ jam_ope.no }} </td>
+            <td> {{ jam_ope.hari }} </td>
+            <td> {{ jam_ope.jam_buka }} </td>
+            <td> {{ jam_ope.jam_tutup }} </td>
+            <td>
+                <div class="mb-3">
+                  <a href='update'>
+                        <button class="btn btn-outline-secondary">Ubah</button>
+                  </a>
+                  <a href='#'>
+                        <button class="btn btn-outline-secondary">Hapus</button>
+                  </a>
+            </div>
+            </td>
+          </tr>
+          {% endfor %}
+          <!-- END SECTION -->
+        </table>
+      </div>
+    </div>
+    {% include 'footer.html' %}
+  </body>
+</html>
+{% endblock content %}
+

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+{% block content %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Detail Transaksi Pesanan Restoran</title>
+  </head>
+  <body>
+ <div class="row">
+       <h1>Ringkasan Pesanan</h1>
+     <div class="hero-container">
+      <!-- <form method="POST"> -->
+            <div class="form-container">
+                  <br>
+                  <h5>Waktu Pemesanan: {{ waktu }}</h5><br>
+                  <h5>Nama Pelanggan: {{ nama }}</h5>
+                  <h5>Jalan: {{ jalan }}</h5>
+                  <h5>Kecamatan: {{ kec }}</h5>
+                  <h5>Kota: {{ kota }}</h5>
+                  <h5>Provinsi: {{ prov }}</h5><br>
+                  <h5>Restoran: {{ rest_name }}</h5>
+                  <h5>Jalan: {{ jalan_rest }}</h5>
+                  <h5>Kecamatan: {{ kec_rest }}</h5>
+                  <h5>Kota: {{ kota_rest }}</h5>
+                  <h5>Provinsi: {{ prov_rest }}</h5><br>
+                  <h5>Makanan yang dipesan:</h5><br>
+                  <!-- <table class="table"> -->
+                        <!-- <tr>
+                              <th>Nama Makanan</th>
+                        </tr> -->
+                        {% for pesanan in hasil %}
+                        <tr>
+                              <td>{{ pesanan.nama }}</td>
+                        </tr>
+                        {% endfor %}
+                  <!-- </table><br> -->
+                  <br>
+                  <h5>Total Harga Makanan: {{ total }}</h5>
+                  <h5>Total Diskom: {{ diskon }}</h5>
+                  <h5>Biaya Pengantaran: {{ biaya }}</h5>
+                  <h5>Total Biaya: {{ total_biaya }}</h5>
+                  <h5>Jenis Pembayaran: {{ pay_jenis }}</h5><br>
+                  <h5>Status Pembayaran: {{ status }}</h5>
+                  <h5>Status Pesanan: {{ status_pes }}</h5><br>
+                  <h5>Kurir: {{ kurir }}</h5>
+                  <h5>Plat Kendaraan: {{ plate }}</h5>
+                  <h5>Jenis Kendaraan: {{ jenis }}</h5>
+                  <h5>Merk Kendaraan: {{ merk }}</h5>
+            </div>
+            <!-- <button type="submit" class="btn btn-primary">AMBIL</button> -->
+            <div class="mb-3">
+                  <a href='/transaksi-pesanan-restoran/read'>
+                        <button class="btn btn-primary">Kembali</button>
+                  </a>
+            </div>
+      <!-- </form> -->
+     </div>
+ </div>
+ {% include 'footer.html' %}
+</html>
+{% endblock content %}
+
+ 
