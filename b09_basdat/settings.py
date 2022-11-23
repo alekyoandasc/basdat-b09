@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'sirest_b09',
     'pengguna',
     'kategorimakanan',
+    'transaksipesanan',
 ]
 
 MIDDLEWARE = [

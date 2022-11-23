@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Pemilihan restoran</h1>
+<table>
+    <tr>
+        <th>No</th>
+        <th>Nama - Cabang restoran</th>
+        <th>Promo berlangsung</th>
+        <th>Aksi</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>McDonald's Depok</td>
+        <td>Promo 17 Agustusan</td>
+        <td><a href="{% url 'show_pemilihan_makanan' %}">[Pilih]</a></td>
+    </tr>
+</table>
+{% endblock content %}
