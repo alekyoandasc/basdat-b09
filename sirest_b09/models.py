@@ -1,9 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class KategoriMakanan(models.Model):
-      id = models.IntegerField(primary_key=True)
-      name = models.CharField(max_length=100)
+
 
 
 class Admin(models.Model):
@@ -66,11 +64,3 @@ class Kurir(models.Model):
       def __str__(self) -> str:
             return f"{self.name} | {self.email}"
 
-
-class Makanan(models.Model):
-      rname = models.ForeignKey(Restoran, on_delete=models.CASCADE)
-      name = models.CharField(max_length=50)
-      description = models.TextField()
-      stock = models.IntegerField()
-      price = models.BigIntegerField()
-      category = models.ForeignKey(KategoriMakanan, on_delete=models.SET_NULL, null=True)

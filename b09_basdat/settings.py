@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'tk_basdat',
     'sirest_b09',
     'pengguna',
+    'kategorimakanan',
 ]
 
 MIDDLEWARE = [
