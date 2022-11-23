@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <form action="">
+        {% csrf_token %}
+        <label for="nilaiPesanan">Nilai:</label>
+        <select name="nilaiPesanan" id="">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+
+        </select>
+        <br>
+        
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+
+
+            </div>
+        </form>
+
+   
+</body>
+</html>
+{% endblock content %}

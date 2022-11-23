@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="flex-row justify-content-center">
+        <p>Waktu Pemesanan: 2022-11-04 11:30:05</p>
+                    
+        <p>
+            Nama Pelanggan: Mikayla Putri <br>
+            Jalan: Jalan Bahagia nomor 72 <br>
+            Kecamatan: Cinere <br>
+            Kota: Depok <br>
+            Provinsi: Jawa Barat <br>
+        </p>
+    
+        <p>
+            Restoran: Warung Mantap Depok <br>
+            Jalan: Jalan Sejahtera nomor 5 <br>
+            Kecamatan: Bojongsari <br>
+            Kota: Depok <br>
+            Provinsi: Jawa Barat <br>
+        </p>
+    
+        <p>Makanan yang dipesan:</p>
+        <ul>
+            <li>Ayam Goreng (1)</li>
+            <li>Ice Cream (2) - Vanilla </li>
+        </li>
+        </ul>
+        <p>
+            Total Harga Makanan: 11000 <br>
+            Total Diskon: 0 <br>
+            Biaya Pengantaran: 4000 <br>
+            Total Biaya: 15000 <br>
+            Jenis Pembayaran: RestoPay <br>
+        </p>
+    
+        <p>
+            Status Pembayaran: Berhasil <br>
+            Status Pesanan: Pesanan Diantar <br>
+        </p>
+    
+        <p>
+            Kurir: Doni Suryana <br>
+            Plat Kendaraan: B 0001 KNN <br>
+            Jenis Kendaraan: Motor <br>
+            Merk Kendaraan: Honda Vario <br>
+    
+        </p>
+    
+        
+        <table>
+            <thead>
+                <th>Status</th>
+                <th>Waktu</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Menunggu Konfirmasi Restoran</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <a href="{% url 'riwayat_dan_promo:riwayat_transaksi'%}">[Kembali]</a>
+    </div>
+
+   
+</body>
+</html>
+{% endblock content %}

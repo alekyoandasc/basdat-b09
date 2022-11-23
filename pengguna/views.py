@@ -35,7 +35,7 @@ def regis_admin(request):
                   # admin.set_password(admin.password)
                   admin.save()
                   registered = True
-                  return redirect('home')
+                  return redirect('homepage')
             else:
                   print(admin_form.errors)
       else:
@@ -52,7 +52,7 @@ def regis_pelanggan(request):
                   pelanggan = pelanggan_form.save()
                   pelanggan.save()
                   registered = True
-                  return redirect('home')
+                  return redirect('homepage')
             else:
                   print(pelanggan_form.errors)
       else:
@@ -69,7 +69,7 @@ def regis_restoran(request):
                   restoran = restoran_form.save()
                   restoran.save()
                   registered = True
-                  return redirect('home')
+                  return redirect('homepage')
             else:
                   print(restoran_form.errors)
       else:
@@ -86,7 +86,7 @@ def regis_kurir(request):
                   kurir = kurir_form.save()
                   kurir.save()
                   registered = True
-                  return redirect('home')
+                  return redirect('homepage')
             else:
                   print(kurir_form.errors)
       else:

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Buat Promo</h1>
+    <div class="d-flex justify-content-center">
+        <a href="{% url 'riwayat_dan_promo:buat_promo_min_transaksi' %}" class="button" style="width: 140px;">
+            <button type="button" class="btn btn-outline-warning">Promo Minimum Transaksi</button>
+        </a>
+        <h4 style="width: 90px;"></h4>
+        <a href="{% url 'riwayat_dan_promo:buat_promo_hari_spesial' %}" class="button">
+            <button type="button" class="btn btn-outline-warning">Promo Hari Spesial</button>
+        </a>
+    </div>
+    
+
+    
+
+</body>
+</html>
+{% endblock content %}

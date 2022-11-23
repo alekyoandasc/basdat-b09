@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'tk_basdat',
     'sirest_b09',
     'pengguna',
+    'riwayat_dan_promo',
     'kategorimakanan',
     'transaksipesanan',
     'restopay',

@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tk_basdat.urls')),
     path('pengguna/', include('pengguna.urls')),
+    path('riwayat_dan_promo/', include('riwayat_dan_promo.urls')),
     path('kategorimakanan/', include('kategorimakanan.urls')),
     path('transaksipesanan/', include('transaksipesanan.urls')),
     path('restopay/', include('restopay.urls')),

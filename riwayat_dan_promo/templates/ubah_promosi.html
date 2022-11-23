@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>{{judul}}</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{promo_form.as_p}}
+        <button type="submit">Simpan</button>
+    </form>
+
+    
+
+</body>
+</html>
+{% endblock content %}
