@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'transaksi_pesanan_restoran',
     'tarif_pengiriman_per_km',
     'restoran',
+    'biru',
 ]
 
 MIDDLEWARE = [

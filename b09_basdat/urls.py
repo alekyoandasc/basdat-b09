@@ -28,4 +28,5 @@ urlpatterns = [
     path('transaksi-pesanan-restoran/', include('transaksi_pesanan_restoran.urls')),
     path('tarif-pengiriman-per-km/', include('tarif_pengiriman_per_km.urls')),
     path('restoran/', include("restoran.urls")),
+    path('', include('biru.urls')),
 ]

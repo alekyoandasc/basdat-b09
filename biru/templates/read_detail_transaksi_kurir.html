@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Read Detail Transaksi Pemesanan Sebagai Kurir</title>
+<style>
+  .container {
+    border: 1px solid;
+    padding: 0px;
+  }
+  p {
+    padding:1px;
+    margin: 0px;
+  }
+  li {
+    margin-left: 30px;
+  }
+</style>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="container">
+<h1 align="center">Ringkasan Pesanan</h1>
+  <div class="container">
+    <p>Waktu Pemesanan: </p>
+    <br>
+    <p>Nama Pelanggan: </p>
+    <p>Jalan: </p>
+    <p>Kecamatan: </p>
+    <p>Kota: </p>
+    <p>Provinsi: </p>
+    <br>
+    <p>Restoran: </p>
+    <p>Jalan: </p>
+    <p>Kecamatan: </p>
+    <p>Kota: </p>
+    <p>Provinsi: </p>
+    <br>
+    <p>Makanan yang dipesan:</p>
+    <li></li>
+    <li></li>
+    <p>Total Harga Makanan: </p>
+    <p>Total Diskon: </p>
+    <p>Biaya Pengantaran: </p>
+    <p>Total Biaya: </p>
+    <p>Jenis Pembayaran: </p>
+    <br>
+    <p>Status Pembayaran: </p>
+    <p>Status Pesanan: </p>
+    <br>
+    <p>Kurir: </p>
+    <p>Plat Kendaraan: </p>
+    <p>Jenis Kendaraan: </p>
+    <p>Merk Kendaraan: </p>
+    <div align="center">  
+      <a href="/read-transaksi-kurir">Kembali</a>
+  </div>
+  </div>
+</div>
+{% endblock content %}

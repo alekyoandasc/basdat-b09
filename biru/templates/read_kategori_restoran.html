@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Read Bahan Makanan</title>
+{% endblock meta %}
+
+{% block content %}
+<h1 align="center">Daftar Bahan Makanan</h1>
+<table align="center" border="5" cellpadding="10">
+  <tr>
+    <th>No.</th>
+    <th>Kategori Restoran</th>
+    <th>Aksi</th>
+</tr>
+{% for res in result %}
+  <tr>
+    <td align="center">{{ forloop.counter }}</td>
+    <td align="center">{{ res }}</td>
+    <td><a href="/kategori-resto/delete/{{ res }}">Hapus</a></td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock content %}
