@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = [f'https://b09-basdat.up.railway.app']
 
 # Application definition
 
