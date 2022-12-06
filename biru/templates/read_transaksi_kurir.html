@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Read Transaksi Pemesanan Sebagai Kurir</title>
+{% endblock meta %}
+
+{% block content %}
+<h1 align="center">Daftar Pesanan Berlangsung</h1>
+<table align="center" border="5" cellpadding="10">
+  <tr>
+    <th>No.</th>
+    <th>Restoran - Cabang</th>
+    <th>Nama Pelanggan</th>
+    <th>Waktu Pesanan Dibuat</th>
+    <th>Status Pemesanan</th>
+    <th>Aksi</th>
+</tr>
+{% for res in result %}
+  <tr>
+    <td align="center">{{ forloop.counter }}</td>
+    <td align="center">{{ res.a }}</td>
+    <td align="center">{{ res.b }}</td>
+    <td align="center">{{ res.a }}</td>
+    <td align="center">{{ res.b }}</td>
+    <td><a href="">Selesai</a><br><a href="">Detail</a></td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock content %}

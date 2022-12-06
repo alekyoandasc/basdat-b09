@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Create Bahan Makanan</title>
+{% endblock meta %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    <table align="center" border="3" cellpadding="10">
+        <tr>
+            <th class="judul">CREATE BAHAN MAKANAN</th>
+           
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">{% csrf_token %}
+                    <div>
+                        <label>Nama Bahan Makanan   : </label>{{form.nama_bahan}}
+                        <br><br>
+                    </div>
+                    <div align="center">  
+                        <input type="submit" value="SIMPAN">
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </table>
+</div>
+{% endblock content %}

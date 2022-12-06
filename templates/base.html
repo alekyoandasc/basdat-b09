@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'css/js/bootstrap.bundle.js' %}"></script>
     {% block meta %} {% endblock meta %}
   </head>
 
@@ -254,6 +254,38 @@
               <li><a class="dropdown-item" href="/pesanan/create-pesanan">Template</a></li>
               <li><a class="dropdown-item" href="/pesanan">Template</a></li>
               <li><a class="dropdown-item" href="/histori-penjualan">Template</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Kategori Restoran
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/create-kategori-restoran">Read Kategori Restoran</a></li>
+              <li><a class="dropdown-item" href="/read-kategori-restoran">Create Kategori Restoran</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle me-3 ms-3"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Bahan Makanan
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/read-bahan-makanan">Read Bahan Makanan</a></li>
+              <li><a class="dropdown-item" href="/create-bahan-makanan">Create Bahan Makanan</a></li>
             </ul>
           </li>
           <li class="nav-item">
