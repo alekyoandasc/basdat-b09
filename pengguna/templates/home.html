@@ -1,2 +1,27 @@
 {% extends 'base.html' %}
 
+
+{% load static %}
+<html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="flex-row justify-content-center">
+        <h1>Dashboard Pengguna: {{request.COOKIES.user_name}}</h1>
+    </div>
+
+   
+</body>
+</html>
+{% endblock content %}

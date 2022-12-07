@@ -1,0 +1,57 @@
+<ul class="navbar-nav ms-auto my-2">
+    <li class="nav-item">
+      <a class="nav-link me-3 ms-3" href="/">Dashboard</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle me-3 ms-3"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Restoran & Makanan
+      </a>
+    </li>
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Pesanan
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="/jam-operasional/create">Buat Pesanan</a></li>
+        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Pesanan Berlangsung</a></li>
+        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Riwayat Pesanan</a></li>
+
+      </ul>
+    </li>
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        RestoPay
+      </a>
+    </li>
+ 
+    <li class="nav-item">
+      {% if request.COOKIES.user_type %}
+        <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">{{request.COOKIES.user_type}}</a>
+        <a class="nav-link me-3 ms-3" href="{% url 'logout_pengguna' %}">Logout</a>
+
+      {% else %}
+        <a href="nav-link me-3 ms-3" href="{% url 'login_pengguna' %}">Login</a>
+      {% endif %} 
+    </li>
+  </ul>

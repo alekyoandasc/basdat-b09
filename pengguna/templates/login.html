@@ -21,6 +21,13 @@
                 <label for="email-input">Password:</label>
                 <input type="password" name="password" placeholder="Password">
             </div>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="text-red-700">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}   
             <button type="submit">Login</button>
         </form>
     </div>
