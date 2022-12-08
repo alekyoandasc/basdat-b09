@@ -16,62 +16,69 @@
 </head>
 <body>
     <div class="flex-row justify-content-center">
-        <p>Waktu Pemesanan: 2022-11-04 11:30:05</p>
+        <p>Waktu Pemesanan: {{transaction.datetime}}</p>
                     
         <p>
-            Nama Pelanggan: Mikayla Putri <br>
-            Jalan: Jalan Bahagia nomor 72 <br>
-            Kecamatan: Cinere <br>
-            Kota: Depok <br>
-            Provinsi: Jawa Barat <br>
+            Nama Pelanggan: {{transaction.fname}} {{transaction.lname}} <br>
+            Jalan: {{transaction.street}} <br>
+            Kecamatan: {{transaction.district}} <br>
+            Kota: {{transaction.city}} <br>
+            Provinsi: {{transaction.province}} <br>
         </p>
     
         <p>
-            Restoran: Warung Mantap Depok <br>
-            Jalan: Jalan Sejahtera nomor 5 <br>
-            Kecamatan: Bojongsari <br>
-            Kota: Depok <br>
-            Provinsi: Jawa Barat <br>
+            Restoran: {{resto.rname}} {{resto.rbranch}} <br>
+            Jalan: {{resto.street}} <br>
+            Kecamatan: {{resto.district}} <br>
+            Kota: {{resto.city}} <br>
+            Provinsi: {{resto.province}} <br>
         </p>
     
         <p>Makanan yang dipesan:</p>
         <ul>
-            <li>Ayam Goreng (1)</li>
-            <li>Ice Cream (2) - Vanilla </li>
+            {% if foods %}
+                {% for food in foods %}
+                    <li>{{food.foodname}} ({{food.amount}}) {% if food.note %} - {{food.note}} {% endif %} </li>
+                {% endfor %}
+            {% endif %}
         </li>
         </ul>
         <p>
-            Total Harga Makanan: 11000 <br>
-            Total Diskon: 0 <br>
-            Biaya Pengantaran: 4000 <br>
-            Total Biaya: 15000 <br>
-            Jenis Pembayaran: RestoPay <br>
+            Total Harga Makanan: {{transaction.totalprice}} <br>
+            Total Diskon: {{transaction.totaldiscount}} <br>
+            Biaya Pengantaran: {{transaction.deliveryfee}} <br>
+            Total Biaya: {{transaction.discountedprice }}<br>
+            Jenis Pembayaran: {{pay_method.name}} <br>
         </p>
     
         <p>
-            Status Pembayaran: Berhasil <br>
-            Status Pesanan: Pesanan Diantar <br>
+            Status Pembayaran: {{pay_status.name}} <br>
+            Status Pesanan: {{transaction_status.0.name}} <br>
         </p>
     
         <p>
-            Kurir: Doni Suryana <br>
-            Plat Kendaraan: B 0001 KNN <br>
-            Jenis Kendaraan: Motor <br>
-            Merk Kendaraan: Honda Vario <br>
+            Kurir: {{courier.fname}} {{courier.lname}}<br>
+            Plat Kendaraan: {{courier.platenum}} <br>
+            Jenis Kendaraan: {{courier.vehicletype}} <br>
+            Merk Kendaraan: {{courier.vehiclebrand}} <br>
     
         </p>
     
         
-        <table>
+        <table class="table">
             <thead>
-                <th>Status</th>
-                <th>Waktu</th>
+                <th scope="col">Status</th>
+                <th scope="col">Waktu</th>
             </thead>
             <tbody>
+                {% if transaction_status %}
+                {% for ts in transaction_status %}
                 <tr>
-                    <td>Menunggu Konfirmasi Restoran</td>
-                    <td></td>
+                    <td>{{ts.name}}</td>
+                    <td>{{ts.datetimestatus}}</td>
                 </tr>
+                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     

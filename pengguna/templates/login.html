@@ -1,5 +1,14 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% load static %}
 <html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,8 +30,16 @@
                 <label for="email-input">Password:</label>
                 <input type="password" name="password" placeholder="Password">
             </div>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="text-red-700">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}   
             <button type="submit">Login</button>
         </form>
     </div>
 </body>
 </html>
+{% endblock content %}

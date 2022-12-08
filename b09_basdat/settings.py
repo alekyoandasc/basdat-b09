@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = [f'https://b09-basdat.up.railway.app']
 
 # Application definition
 
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'transaksi_pesanan_restoran',
     'tarif_pengiriman_per_km',
     'restoran',
+    'biru',
 ]
 
 MIDDLEWARE = [
@@ -87,11 +89,38 @@ WSGI_APPLICATION = 'b09_basdat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+if PRODUCTION:
+    PGDATABASE = os.getenv('PGDATABASE')
+    PGUSER = os.getenv('PGUSER')
+    PGPASSWORD = os.getenv('PGPASSWORD')
+    PGHOST = os.getenv('PGHOST')
+    PGPORT = os.getenv('PGPORT')
+else:
+    # nama database di wsl
+    PGDATABASE = 'localb09'
+    PGUSER = 'postgres'
+    # password user postgres di wsl
+    PGPASSWORD = 'Adrian2710#'
+    PGHOST = '127.0.0.1'
+    PGPORT = '5432'
+
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': PGDATABASE,
+        'USER': PGUSER,
+        'PASSWORD': PGPASSWORD,
+        'HOST': PGHOST,
+        'PORT': PGPORT,
+    },
+
+
 }
 
 if PRODUCTION:

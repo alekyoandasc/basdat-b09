@@ -1,0 +1,53 @@
+
+<h2>DAFTAR AKTOR TRANSAKSI</h2>
+<table class="table">
+    <thead>
+        <th scope="col">Email</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Role</th>
+        <th scope="col">Status</th>
+        <th scope="col">Aksi</th>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        {% if user.birthdate or user.rname or user.platenum %}
+        <tr>
+            <td>{{user.email}}</td>
+            <td>{{user.fname}} {{user.lname}}</td>
+            <td>
+                {% if user.birthdate %}
+                    Pelanggan
+                {% elif user.rname %}
+                    Restoran
+                {% else %}
+                    Kurir
+                {% endif %}
+            </td>
+            <td>
+                {% if user.adminid %}
+                    Terverifikasi
+                {% else %}
+                    Belum Terverifikasi
+                {% endif %}
+            </td>
+                
+            <td>
+                {% if user.birthdate %}
+                    <a href="/pengguna/detail_customer/{{user.email}}">[Detail]</a> 
+                {% elif user.rname %}
+                    <a href="/pengguna/detail_resto/{{user.email}}">[Detail]</a> 
+                {% else %}
+                    <a href="/pengguna/detail_courier/{{user.email}}">[Detail]</a> 
+                {% endif %}
+                <br>
+                {% if not user.adminid %}
+                    <a href="/pengguna/verifikasi/{{user.email}}">[Verifikasi]</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        
+    {% endfor %}
+    </tbody>
+    
+</table>

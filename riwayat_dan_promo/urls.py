@@ -7,8 +7,8 @@ app_name = 'riwayat_dan_promo'
 
 urlpatterns = [
       path('', riwayat_transaksi, name='riwayat_transaksi'),
-      path('detail/<id>', detail_transaksi, name='detail_transaksi'),
-      path('nilai/<id>', nilai_transaksi, name='nilai_transaksi'),
+      path('detail_transaksi/<email>/<date>/<time>', detail_transaksi, name='detail_transaksi'),
+      path('nilai/<email>/<date>/<time>', nilai_transaksi, name='nilai_transaksi'),
       path('buat_promo/', buat_promo, name='buat_promo'),
       path('buat_promo/promo_min_transaksi/', buat_promo_min_transaksi, name='buat_promo_min_transaksi'),
       path('buat_promo/promo_hari_spesial/', buat_promo_hari_spesial, name='buat_promo_hari_spesial'),
