@@ -16,16 +16,27 @@
         </tr>
     </thead>
     <tbody>
+        {% for kategorimakanan in kategorimakanan_data_referenced %}
         <tr>
-            <th scope="row">1</th>
-            <td>Snack</td>
-            <td></td>
+            <th scope="row">{{kategorimakanan.0}}</th>
+            <td>{{kategorimakanan.1}}</td>
+            <td>-</td>
         </tr>
+        {% endfor %}
+
+        {% for kategorimakanan in kategorimakanan_data_not_referenced %}
         <tr>
-            <th scope="row">2</th>
-            <td>Minuman</td>
-            <td><button class="btn btn-primary">Delete</button></td>
+            <th scope="row">{{kategorimakanan.0}}</th>
+            <td>{{kategorimakanan.1}}</td>
+            <td>
+                <form action="{% url 'delete_kategori_makanan' kategorimakanan.0 %}" method="post">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Delete">
+                </form>
+                <!-- <button class="btn btn-primary">Delete</button> -->
+            </td>
         </tr>
+        {% endfor %}
     </tbody>
 
 </table>

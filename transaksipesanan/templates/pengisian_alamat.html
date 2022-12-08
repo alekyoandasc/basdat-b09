@@ -7,7 +7,8 @@
 
 {% block content %}
 <h1>Form pengisian alamat pemesanan makanan</h1>
-<form action="{% url 'show_pemilihan_restoran' %}">
+<form method="POST" action="{% url 'post_pengisian_alamat' %}">
+    {% csrf_token %}
     <label for="Jalan">Jalan : </label>
     <input type="text" id="Jalan" name="Jalan"><br><br>
     <label for="Kecamatan">Kecamatan : </label>
@@ -16,8 +17,9 @@
     <input type="text" id="Kota" name="Kota"><br><br>
     <label for="Provinsi">Provinsi : </label>
     <select id="Provinsi" name="Provinsi">
-        <option value="Jawa Barat">Jawa Barat</option>
-        <option value="DKI Jakarta">DKI Jakarta</option>
+        {% for provinsi in province %}
+        <option value={{provinsi.0}}>{{provinsi.0}}</option>
+        {% endfor %}
     </select>
     <input type="submit" value="Submit">
   </form>

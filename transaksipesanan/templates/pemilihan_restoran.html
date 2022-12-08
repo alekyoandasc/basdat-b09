@@ -7,19 +7,26 @@
 
 {% block content %}
 <h1>Pemilihan restoran</h1>
-<table>
+<table class="table">
     <tr>
         <th>No</th>
         <th>Nama - Cabang restoran</th>
         <th>Promo berlangsung</th>
         <th>Aksi</th>
     </tr>
+    
+    {% for restoran in restaurant_data %}
     <tr>
-        <td>1</td>
-        <td>McDonald's Depok</td>
-        <td>Promo 17 Agustusan</td>
-        <td><a href="{% url 'show_pemilihan_makanan' %}">[Pilih]</a></td>
+        <td>{{ forloop.counter }}</td>
+        <td>{{restoran.0}} - {{restoran.1}}</td>
+        <td>-</td>
+        <td><form action="{% url 'show_pemilihan_makanan' restoran.0 restoran.1 %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="[Pilih]">
+            </form></td>
     </tr>
+    {% endfor%}
+    
 </table>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

@@ -7,7 +7,7 @@
 
 {% block content %}
 <h1>FORM BUAT KATEGORI MAKANAN</h1>
-<form method="POST">
+<form method="POST" action="{% url 'add_kategori_makanan' %}">
     {% csrf_token %}
     <label for="name">Nama Kategori Makanan : </label>
     <input type="text" id="name" name="name">
