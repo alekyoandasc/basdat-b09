@@ -1,400 +1,565 @@
 from django import forms
 from sirest_b09.models import Admin, Pelanggan, Restoran, Kurir
+from django.db import connection
+class AdminForm(forms.Form):
+      
+      email = forms.EmailField(
+            label='Email',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name': 'email',
+                        'type' : 'email',
+                        'placeholder' : 'Email',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      password = forms.CharField(
+            max_length=30, 
+            label='Password',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'password',
+                        'type' : 'password',
+                        'placeholder' : 'Password',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      fname = forms.CharField(
+            max_length=100, 
+            label='Nama Depan',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name':'fname',
+                        'type' : 'text',
+                        'placeholder' : 'Nama Depan',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
 
-class AdminForm(forms.ModelForm):
-      class Meta:
-            model = Admin
-            fields = ('email', 'password', 'name', 'no_hp')
+      lname = forms.CharField(
+            max_length=100, 
+            label='Nama Akhir',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name':'lname',
+                        'type' : 'text',
+                        'placeholder' : 'Nama Akhir',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_hp = forms.CharField(
+            max_length=12, 
+            label='No Handphone',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name':'no_hp',
+                        'type' : 'tel',
+                        'placeholder' : 'No Handphone',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
 
-            # custom labels
-            labels = {
-                  'email' : 'Email',
-                  'password' : 'Password',
-                  'name' : 'Nama Lengkap',
-                  'no_hp' : 'No Handphone',
-            }
 
-            # custom widgets
-            widgets = {
-                  'email' : forms.TextInput(
-                        attrs={
-                              'type' : 'email',
-                              'placeholder' : 'username@domain',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'password' : forms.TextInput(
-                        attrs={
-                              'type' : 'password',
-                              'placeholder' : 'Password',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'name' : forms.TextInput(
-                        attrs={
-                              'type' : 'text',
-                              'placeholder' : 'Nama Lengkap',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_hp' : forms.TextInput(
-                        attrs={
-                              'type' : 'tel',
-                              'placeholder' : 'No Handphone',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  )
-            }
 
-class PelangganForm(forms.ModelForm):
-      class Meta:
-            model = Pelanggan
-            fields = ('email', 'password', 'name', 'no_hp', 'nik', 'bank_name', 'no_rek', 'bdate', 'gender')
-            def __init__(self, *args, **kwargs):
-                  super().__init__(*args, **kwargs)
-                  self.fields['gender'].queryset = Pelanggan.objects.none()
 
-            labels = {
-                  'email' : 'Email',
-                  'password' : 'Password',
-                  'name' : 'Nama Lengkap',
-                  'no_hp': 'No Handphone',
-                  'nik' : 'NIK',
-                  'bank_name' : 'Nama Bank',
-                  'no_rek' : 'Nomor Rekening',
-                  'bdate' : 'Tanggal Lahir',
-                  'gender' : 'Jenis Kelamin'
-            }
+class PelangganForm(forms.Form):
 
-            widgets = {
-                  'email' : forms.TextInput(
-                        attrs={
-                              'type' : 'email',
-                              'placeholder': 'username@domain',
-                              'class': 'form-control',
-                              'aria-describedby': 'inputGroupPrepend',
-                        }
-                  ),
-                  'password': forms.TextInput(
-                        attrs={
-                              'type':'password',
-                              'placeholder':'Password',
-                              'class':'form-control',
-                              'aria-describedby':'inputGroupPrepend',
-                        }
-                  ),
-                  'name':forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'palceholder':'Nama Lengkap',
-                              'class':'form-control',
-                              'aria-describedby':'inputGroupPrepend',
-                        }
-                  ),
-                  'no_hp' : forms.TextInput(
-                        attrs={
-                              'type' : 'telp',
-                              'placeholder' : 'No Handphone',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'nik' : forms.TextInput(
-                        attrs={
-                              'type' : 'number',
-                              'placeholder' : 'NIK',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'bank_name' : forms.TextInput(
-                        attrs={
-                              'type' : 'text',
-                              'placeholder' : 'Nama Bank',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_rek' : forms.TextInput(
-                        attrs={
-                              'type' : 'number',
-                              'placeholder' : 'Nomor Rekening',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'bdate' : forms.DateInput(
-                        attrs={
-                              'type' : 'date',
-                              'placeholder' : 'Tanggal Lahir',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'gender' : forms.Select(
-                        # choices=JK
-                        # attrs={
-                        #       'type' : 'text',
-                        #       'placeholder' : 'Jenis Kelamin',
-                        #       'class' : 'form-control',
-                        #       'aria-describedby' : 'inputGrouPrepend',
-                        # }
-                  )
-            }
+            
+      email = forms.EmailField(
+            label = 'Email',
+            widget = forms.TextInput(
+                  attrs={
+                        'name' : 'email',
+                        'type' : 'email',
+                        'placeholder': 'username@domain',
+                        'class': 'form-control',
+                        'aria-describedby': 'inputGroupPrepend',
+                  }
+            ),
+      )
+      password = forms.CharField(
+            max_length=30,
+            label = 'Password',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'password',
+                        'type':'password',
+                        'placeholder':'Password',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      fname = forms.CharField(
+            max_length=100,
+            label = 'Nama Depan',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'fname',
+                        'type':'text',
+                        'palceholder':'Nama Depan',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      lname = forms.CharField(
+            max_length=100,
+            label = 'Nama Akhir',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'lname',
+                        'type':'text',
+                        'palceholder':'Nama Akhir',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_hp = forms.CharField(
+            max_length=12, 
+            label='No Handphone',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name':'no_hp',
+                        'type' : 'tel',
+                        'placeholder' : 'No Handphone',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      nik = forms.CharField(
+            max_length=18,
+            label = 'NIK',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'nik',
+                        'type' : 'number',
+                        'placeholder' : 'NIK',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      bank_name = forms.CharField(
+            max_length=30,
+            label = 'Nama Bank',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'bank_name',
+                        'type' : 'text',
+                        'placeholder' : 'Nama Bank',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_rek = forms.CharField(
+            max_length=25,
+            label = 'No Rekening',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'no_rek',
+                        'type' : 'number',
+                        'placeholder' : 'Nomor Rekening',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      bdate = forms.DateField(
+            label = 'Tanggal lahir',
+            widget = forms.DateInput(
+                  attrs={
+                        'name': 'bdate',
+                        'type' : 'date',
+                        'placeholder' : 'Tanggal Lahir',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      JK = [('p', 'Pria'), ('w', 'Wanita'),]
+      gender = forms.ChoiceField(
+            choices=JK, 
+            label = 'Jenis Kelamin',
+            widget = forms.Select(
+                  attrs={
+                        'name': 'gender'
+                  }
+            )
+      )
 
-class RestoranForm(forms.ModelForm):
-      class Meta:
-            model = Restoran
-            fields = ('email', 'password', 'name', 'no_hp', 'nik', 'bank_name', 'no_rek', 'rest_name',
-                        'branch', 'no_telp', 'street', 'districts', 'city', 'province')
 
-            labels = {
-                  'email': 'Email',
-                  'password':'Password',
-                  'name' : 'Nama Lengkap',
-                  'no_hp': 'No Handphone',
-                  'nik': 'NIK Pemilik',
-                  'bank_name': 'Nama Bank',
-                  'no_rek': 'Nomor Rekening',
-                  'rest_name': 'Nama Restoran',
-                  'branch': 'Cabang',
-                  'no_telp': 'No Telepon',
-                  'street': 'Nama Jalan',
-                  'districts': 'Kecamatan',
-                  'city': 'Kota',
-                  'province': 'Provinsi'
-            }
+     
 
-            widgets = {
-                  'email' : forms.TextInput(
-                        attrs={
-                              'type':'email',
-                              'placeholder' : 'username@domain',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'password' : forms.TextInput(
-                        attrs={
-                              'type':'password',
-                              'placeholder' : 'Password',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'name' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Lengkap',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_hp' : forms.TextInput(
-                        attrs={
-                              'type':'number',
-                              'placeholder' : 'No Handphone',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'nik' : forms.TextInput(
-                        attrs={
-                              'type':'number',
-                              'placeholder' : 'NIK',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'bank_name' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Bank',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_rek' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nomor Rekening',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'rest_name' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Restoran',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'branch' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Cabang',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_telp' : forms.TextInput(
-                        attrs={
-                              'type':'number',
-                              'placeholder' : 'No Telepon Restoran',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'street' : forms.TextInput(
-                        attrs={
-                              'type':'char',
-                              'placeholder' : 'Nama Jalan',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'districts' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Kecamatan',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'city' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Kota/Kabupaten',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'province' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Provinsi',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-            }
+class RestoranForm(forms.Form):
+      
+      email = forms.EmailField(
+            label = 'Email',
+            widget = forms.TextInput(
+                  attrs={
+                        'name' : 'email',
+                        'type' : 'email',
+                        'placeholder': 'username@domain',
+                        'class': 'form-control',
+                        'aria-describedby': 'inputGroupPrepend',
+                  }
+            ),
+      )
+      password = forms.CharField(
+            max_length=30,
+            label = 'Password',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'password',
+                        'type':'password',
+                        'placeholder':'Password',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      fname = forms.CharField(
+            max_length=100,
+            label = 'Nama Depan',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'fname',
+                        'type':'text',
+                        'palceholder':'Nama Depan',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      lname = forms.CharField(
+            max_length=100,
+            label = 'Nama Akhir',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'lname',
+                        'type':'text',
+                        'palceholder':'Nama Akhir',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_hp = forms.CharField(
+            max_length=12, 
+            label='No Handphone',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name':'no_hp',
+                        'type' : 'tel',
+                        'placeholder' : 'No Handphone',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      nik = forms.CharField(
+            max_length=18,
+            label = 'NIK',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'nik',
+                        'type' : 'number',
+                        'placeholder' : 'NIK',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      bank_name = forms.CharField(
+            max_length=30,
+            label = 'Nama Bank',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'bank_name',
+                        'type' : 'text',
+                        'placeholder' : 'Nama Bank',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_rek = forms.CharField(
+            max_length=25,
+            label = 'No Rekening',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'no_rek',
+                        'type' : 'number',
+                        'placeholder' : 'Nomor Rekening',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      rest_name = forms.CharField(
+            max_length=50,
+            label = 'Nama Restoran',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'rest_name',
+                        'type':'text',
+                        'placeholder' : 'Nama Restoran',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      branch = forms.CharField(
+            max_length=50,
+            label = 'Nama Cabang',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'branch',
+                        'type':'text',
+                        'placeholder' : 'Cabang',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_telp = forms.CharField(
+            max_length=12,
+            label = 'Kontak Restoran',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'no_telp',
+                        'type':'number',
+                        'placeholder' : 'No Telepon Restoran',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      street = forms.CharField(
+            max_length=50,
+            label = 'Jalan',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'street',
+                        'type':'char',
+                        'placeholder' : 'Nama Jalan',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      district = forms.CharField(
+            max_length=50,
+            label = 'Kecamatan',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'district',
+                        'type':'text',
+                        'placeholder' : 'Nama Kecamatan',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      city = forms.CharField(
+            max_length=50,
+            label = 'Kota',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'city',
+                        'type':'text',
+                        'placeholder' : 'Nama Kota/Kabupaten',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
 
-class KurirForm(forms.ModelForm):
-      class Meta:
-            model = Kurir
-            fields = ('email', 'password', 'name', 'no_hp', 'nik', 'bank_name', 'no_rek',
-                        'plate_num', 'sim_num', 'vehicle_brand', 'trans_type')
-            def __init__(self, *args, **kwargs):
-                  super().__init__(*args, **kwargs)
-                  self.fields['trans_type'].queryset = Kurir.objects.none()
 
-            labels = {
-                  'email': 'Email',
-                  'password': 'Password',
-                  'name': 'Nama Lengkap',
-                  'no_hp': 'No Handphone',
-                  'nik': 'NIK',
-                  'bank_name': 'Nama Bank',
-                  'no_rek': 'Nomor Rekening',
-                  'plate_num': 'Plat Nomor Kendaraan',
-                  'sim_num': 'Nomor SIM',
-                  'vehicle_brand': 'Merk Kendaraan',
-                  'trans_type': 'Jenis Kendaraan',
 
-            }
+      
 
-            widgets = {
-                  'email' : forms.TextInput(
-                        attrs={
-                              'type':'email',
-                              'placeholder' : 'username@domain',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'password' : forms.TextInput(
-                        attrs={
-                              'type':'password',
-                              'placeholder' : 'Password',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'name' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Lengkap',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_hp' : forms.TextInput(
-                        attrs={
-                              'type':'telp',
-                              'placeholder' : 'No Handphone',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'nik' : forms.TextInput(
-                        attrs={
-                              'type':'number',
-                              'placeholder' : 'NIK',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'bank_name' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Nama Bank',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'no_rek' : forms.TextInput(
-                        attrs={
-                              'type':'number',
-                              'placeholder' : 'Nomor Rekening',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'plate_num' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Plat Nomor Kendaraan',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'sim_num' : forms.TextInput(
-                        attrs={
-                              'type':'number',
-                              'placeholder' : 'Nomor SIM',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'vehicle_brand' : forms.TextInput(
-                        attrs={
-                              'type':'text',
-                              'placeholder' : 'Merk Kendaraan',
-                              'class' : 'form-control',
-                              'aria-describedby' : 'inputGroupPrepend',
-                        }
-                  ),
-                  'trans_type' : forms.Select(
-                        # attrs={
-                        #       'type':'email',
-                        #       'placeholder' : 'username@domain',
-                        #       'class' : 'form-control',
-                        #       'aria-describedby' : 'inputGroupPrepend',
-                        # }
-                  )
-            }
+
+
+
+
+            
+      
+
+class KurirForm(forms.Form):
+      email = forms.EmailField(
+            label = 'Email',
+            widget = forms.TextInput(
+                  attrs={
+                        'name' : 'email',
+                        'type' : 'email',
+                        'placeholder': 'username@domain',
+                        'class': 'form-control',
+                        'aria-describedby': 'inputGroupPrepend',
+                  }
+            ),
+      )
+      password = forms.CharField(
+            max_length=30,
+            label = 'Password',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'password',
+                        'type':'password',
+                        'placeholder':'Password',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      fname = forms.CharField(
+            max_length=100,
+            label = 'Nama Depan',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'fname',
+                        'type':'text',
+                        'palceholder':'Nama Depan',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      lname = forms.CharField(
+            max_length=100,
+            label = 'Nama Akhir',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'lname',
+                        'type':'text',
+                        'palceholder':'Nama Akhir',
+                        'class':'form-control',
+                        'aria-describedby':'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_hp = forms.CharField(
+            max_length=12, 
+            label='No Handphone',
+            widget= forms.TextInput(
+                  
+                  attrs={
+                        'name':'no_hp',
+                        'type' : 'tel',
+                        'placeholder' : 'No Handphone',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      nik = forms.CharField(
+            max_length=18,
+            label = 'NIK',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'nik',
+                        'type' : 'number',
+                        'placeholder' : 'NIK',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      bank_name = forms.CharField(
+            max_length=30,
+            label = 'Nama Bank',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'bank_name',
+                        'type' : 'text',
+                        'placeholder' : 'Nama Bank',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      no_rek = forms.CharField(
+            max_length=25,
+            label = 'No Rekening',
+            widget = forms.TextInput(
+                  attrs={
+                        'name': 'no_rek',
+                        'type' : 'number',
+                        'placeholder' : 'Nomor Rekening',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      
+      plate_num = forms.CharField(
+            max_length=10,
+            label='Plat Nomor',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'plate_num',
+                        'type':'text',
+                        'placeholder' : 'Plat Nomor Kendaraan',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      sim_num = forms.CharField(
+            max_length=18,
+            label='Nomor SIM',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'sim_num',
+                        'type':'number',
+                        'placeholder' : 'Nomor SIM',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      vehicle_brand = forms.CharField(
+            max_length=30,
+            label='Merk Kendaraan',
+            widget= forms.TextInput(
+                  attrs={
+                        'name': 'vehicle_brand',
+                        'type':'text',
+                        'placeholder' : 'Merk Kendaraan',
+                        'class' : 'form-control',
+                        'aria-describedby' : 'inputGroupPrepend',
+                  }
+            ),
+      )
+      TRANS = [('Motor', 'Motor'), ('Mobil', 'Mobil')]
+      trans_type = forms.ChoiceField(
+            choices=TRANS, 
+            label='Tipe Kendaraan',
+            widget= forms.Select(
+                  attrs={
+                        'name':'trans_type'
+                  }
+            )
+      )
+
+
+     

@@ -1,6 +1,14 @@
+{% extends 'base.html' %}
+
+
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
+
+{% block meta %}
+<title>SIREST-B09</title>
+{% endblock meta %}
+
+{% block content %}
       <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,8 +51,40 @@
                         </div>
                   </div>
                   {% endfor %}
+                  <div class="col">
+                        <label for="province" class="form-label">Provinsi</label>
+                        <div class="input-group has-validation">
+                              
+                              <select name="province" id="province">
+                                    {% for p in province %}
+                                    <option value="{{p}}">{{p}}</option>
+                                    {% endfor %}
+                              </select>
+                        </div>
+                        
+                  </div>
+                  <div class="col">
+                        <label for="category" class="form-label">Kategori Restoran</label>
+                        <div class="input-group has-validation">
+                              <select name="category" id="category">
+                                    {% for c in category %}
+                                    <option value="{{c.id}}">{{c.name}}</option>
+                                    {% endfor %}
+                              </select>
+                        </div>
+                        
+                  </div>
+                  {% if messages %}
+                  <ul>
+                        {% for message in messages %}
+                              <li class="text-red-700">{{ message }}</li>
+                        {% endfor %}
+                  </ul>
+                  {% endif %} 
                   <button type="submit"><span>DAFTAR</span></button>
-                  <h5>Sudah Punya Akun? Silahkan <a href="#">Login</a></h5>
+                  <h5>Sudah Punya Akun? Silahkan <a href="{% url 'login_pengguna' %}">Login</a></h5>
+
             </form>
       </body>
 </html>
+{% endblock content %}
