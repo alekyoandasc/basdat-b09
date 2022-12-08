@@ -191,7 +191,7 @@ def login_pengguna(request):
 
 def logout_pengguna(request):
       # TODO: Logout pengguna
-      response = HttpResponseRedirect(reverse('login_pengguna'))
+      response = HttpResponseRedirect(reverse('index'))
       response.delete_cookie('user_name')
       response.delete_cookie('user_email')
       response.delete_cookie('user_type')
