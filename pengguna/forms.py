@@ -195,7 +195,7 @@ class PelangganForm(forms.Form):
                   }
             ),
       )
-      JK = [('p', 'Pria'), ('w', 'Wanita'),]
+      JK = [('M', 'Pria'), ('F', 'Wanita'),]
       gender = forms.ChoiceField(
             choices=JK, 
             label = 'Jenis Kelamin',

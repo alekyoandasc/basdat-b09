@@ -18,24 +18,31 @@
 </head>
 <body>
     <div class="flex-row justify-content-center">
-        <h1>Dashboard Pengguna: {{request.COOKIES.user_name}}</h1>
+        <h1>Profil Pengguna: {{current_user.fname}} {{current_user.lname}}</h1>
         
         <p><span class="font-weight-bold">Email: </span>{{current_user.email}}</p>
         <p><span class="font-weight-bold">Password: </span>{{current_user.password}}</p>
         <p><span class="font-weight-bold">Nama: </span>{{current_user.fname}} {{current_user.lname}}</p>
         <p><span class="font-weight-bold">Nomor HP: </span>{{current_user.phonenum}}</p>
         
-    {% if request.COOKIES.user_type == 'admin' %}
-        {% include 'dashboard_admin.html' %}
-    {% else %}
+
         <p><span class="font-weight-bold">NIK: </span>{{current_user.nik}}</p>
         <p><span class="font-weight-bold">Nama Bank: </span>{{current_user.bankname}}</p>
         <p><span class="font-weight-bold">Nomor Rekening: </span>{{current_user.accountno}}</p>
-        {% if request.COOKIES.user_type == 'resto' %}
+        {% if current_user.rname %}
             {% include 'dashboard_resto.html' %}
-        {% elif request.COOKIES.user_type == 'customer' %}
+        <p><span class="font-weight-bold">Promo berlangsung: </span></p>
+        {% if promos %}
+        <ul>
+            {% for p in promos %}
+            <li>{{p.promoname}}: {{p.start}} - {{p.endpromo}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% elif current_user.birthdate %}
             {% include 'dashboard_customer.html' %}
-        {% elif request.COOKIES.user_type == 'courier' %}
+        {% elif current_user.platenum %}
             {% include 'dashboard_courier.html' %}
         {% endif %}    
         
@@ -47,9 +54,9 @@
         {% endif %}
         
         <p><span class="font-weight-bold">Saldo RestoPay: </span> {{current_user.restopay}}</p>
-            
-    {% endif %}
+                
 
+        <a href="{% url 'homepage' %}">[Kembali]</a>
 
     </div>
 

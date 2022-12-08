@@ -1,0 +1,20 @@
+<p><span class="font-weight-bold">Nama Restoran: </span>{{current_user.rname}}</p>
+<p><span class="font-weight-bold">Cabang: </span>{{current_user.rbranch}}</p>
+<p><span class="font-weight-bold">Kontak Restoran: </span>{{current_user.rphonenum}}</p>
+<p><span class="font-weight-bold">Jalan: </span>{{current_user.street}}</p>
+<p><span class="font-weight-bold">Kecamatan: </span>{{current_user.district}}</p>
+<p><span class="font-weight-bold">Kota: </span>{{current_user.city}}</p>
+<p><span class="font-weight-bold">Provinsi: </span>{{current_user.province}}</p>
+<p><span class="font-weight-bold">Rating: </span>{{current_user.rating}}</p>
+<p><span class="font-weight-bold">Kategori: </span>{{current_user.category}}</p>
+<p><span class="font-weight-bold">Jam Operasional: </span></p>
+{% if operating_hours %}
+<ul>
+    {% for o in operating_hours %}
+    <li>{{o.day}}: {{o.starthours}} - {{o.endhours}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
