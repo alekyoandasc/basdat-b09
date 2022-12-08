@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Pemilihan restoran</h1>
+<table>
+    <tr>
+        <th>No</th>
+        <th>Nama Makanan</th>
+        <th>Harga</th>
+        <th>Jumlah</th>
+        <th>Catatan</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Ayam Goreng</td>
+        <td>5000</td>
+        <td>1</td>
+        <td>[Tambah Catatan]</td>
+    </tr>
+</table>
+<h2>Pilih Metode Pembayaran dan Pengantaran</h2>
+<label for="Pengantaran">Metode Pengantaran</label>
+<select id="Pengantaran" name="Pengantaran">
+    <option value="Motor">Motor</option>
+    <option value="Mobil">Mobil</option>
+</select>
+<label for="Pembayaran">Metode Pembayaran</label>
+<select id="Pembayaran" name="Pembayaran">
+    <option value="-">-</option>
+    <option value="-">-</option>
+</select>
+<a href="{% url 'show_daftar_pesanan' %}">[Pesan]</a>
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Ringkasan Pesanan</h2>
+<br>
+
+<p>Nama Pelanggan : </p>
+<p>Jalan : </p>
+<p>Kecamatan : </p>
+<p>Kota : </p>
+<p>Provinsi : </p>
+<br>
+<p>Restoran : </p>
+<p>Jalan : </p>
+<p>Kecamatan : </p>
+<p>Kota : </p>
+<p>Provinsi : </p>
+<br>
+<p>Makanan yang dipesan : </p>
+<ul>
+    <li> - </li>
+</ul>
+
+<br>
+<p>Total Harga Makanan :</p>
+<p>Total Diskon : </p>
+<p>Biaya Pengantaran : </p> 
+<p>Total Biaya : </p>
+<p>Jenis Pembayaran : </p>
+
+<br>
+<p>Sisa Waktu Konfirmasi : </p>
+<p>Status Pembayaran : </p>
+<p>Status Pesanan : </p>
+
+<br>
+
+<p>Kurir : </p>
+<p>Plat Kendaraan : </p>
+<p>Jenis Kendaraan : </p> 
+<p>Merk Kendaraan : </p>
+<br>
+
+<a href="{% url 'show_pengisian_alamat' %}">Kembali</a>
+{% endblock content %}

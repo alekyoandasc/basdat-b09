@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Daftar Pesanan</h2>
+<table>
+    <tr>
+        <th>No</th>
+        <th>Nama Makanan</th>
+        <th>Harga</th>
+        <th>Jumlah</th>
+        <th>Total</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Ayam Goreng</td>
+        <td>5000</td>
+        <td>1</td>
+        <td>5000</td>
+    </tr>
+</table>
+<p>Total Harga : {{total}}</p>
+<p>Metode Pengantaran : </p>
+<p>Metode Pembayaran : </p>
+<br>
+<p>Total Diskon : </p>
+<p>Biaya Pengantaran</p>
+<p>Total Biaya</p>
+<br>
+<a href="{% url 'show_konfirmasi_pesanan' %}">Konfirmasi Pembayaran</a>
+{% endblock content %}

@@ -6,7 +6,8 @@ from django import forms
 from django.template import RequestContext
 from django.contrib.auth import authenticate
 
-from sirest_b09.models import Admin, Pelanggan, Restoran, Kurir
+from django.urls import reverse
+from sirest_b09.models import *
 from .forms import AdminForm, PelangganForm, RestoranForm, KurirForm
 from json import dumps
 
@@ -93,5 +94,4 @@ def regis_kurir(request):
       return render(request, 'regis_kurir.html',
             {'kurir_form':kurir_form,
             'registered': registered})
-
 
