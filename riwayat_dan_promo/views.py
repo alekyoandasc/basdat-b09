@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from riwayat_dan_promo.forms import *
 from riwayat_dan_promo.models import *
 from django.db import connection, transaction
+from django.contrib import messages
+
 # Create your views here.
 
 
@@ -192,104 +194,226 @@ def buat_promo(request):
 
 def buat_promo_min_transaksi(request):
     promo_form = PromoMinTransaksiForm(request.POST or None)
-    judul = "Form Promo Minimum Transaksi"
+    jenis = "MINIMUM TRANSAKSI"
     if request.method == 'POST':
             if promo_form.is_valid():
-                  promo = promo_form.save(commit=False)
-                  promo.tipe_promo = 'm'
-                  promo.save()
-                  return redirect('riwayat_dan_promo:daftar_promosi')
+                promoname = request.POST.get('promoname')
+                discount = request.POST.get('discount')
+                minimumtransactionnum = request.POST.get('minimumtransactionnum')
+                with transaction.atomic():
+                    with connection.cursor() as cursor:
+                            cursor.execute("""
+                                        SELECT * FROM SIREST.PROMO 
+                            """)
+                            increment = cursor.rowcount
+                            increment+=1
+                            pid = "P" + str(increment)
+                            try:
+                                cursor.execute(f"""
+                                        INSERT INTO SIREST.PROMO
+                                        VALUES ('{pid}', '{promoname}', {discount})
+                                """)
+                                cursor.execute(f"""
+                                        INSERT INTO SIREST.MIN_TRANSACTION_PROMO
+                                        VALUES ('{pid}', {minimumtransactionnum})
+                                """)
+              
+                                return redirect('riwayat_dan_promo:daftar_promosi')
+                            except Exception as e:
+                                messages.info(request, e)
             else:
-                  print(promo_form.errors)
+                print(promo_form.errors)
 
     return render(request, 'buat_promo_form.html', 
-            {'promo_form':promo_form, 'judul': judul})
+            {'promo_form':promo_form, 'jenis': jenis})
 
 def buat_promo_hari_spesial(request):
     promo_form = PromoHariSpesialForm(request.POST or None)
-    judul = 'Form Promo Hari Spesial'
+    jenis = 'HARI SPESIAL'
     if request.method == 'POST':
             if promo_form.is_valid():
-                  promo = promo_form.save(commit=False)
-                  promo.tipe_promo = 'h'
-                  promo.save()
-                  return redirect('riwayat_dan_promo:daftar_promosi')
+                promoname = request.POST.get('promoname')
+                discount = request.POST.get('discount')
+                date = request.POST.get('date')
+                with transaction.atomic():
+                    with connection.cursor() as cursor:
+                            cursor.execute("""
+                                        SELECT * FROM SIREST.PROMO 
+                            """)
+                            increment = cursor.rowcount
+                            increment+=1
+                            pid = "P" + str(increment)
+                            try:
+                                cursor.execute(f"""
+                                        INSERT INTO SIREST.PROMO
+                                        VALUES ('{pid}', '{promoname}', {discount})
+                                """)
+                                cursor.execute(f"""
+                                        INSERT INTO SIREST.SPECIAL_DAY_PROMO
+                                        VALUES ('{pid}', '{date}')
+                                """)
+              
+                                return redirect('riwayat_dan_promo:daftar_promosi')
+                            except Exception as e:
+                                messages.info(request, e) 
             else:
                   print(promo_form.errors)
 
     return render(request, 'buat_promo_form.html', 
-            {'promo_form':promo_form, 'judul': judul})
+            {'promo_form':promo_form, 'jenis': jenis})
 
 
 def daftar_promosi(request):
-    promosi = Promo.objects.all()
-    context = {
-        'daftar_promo': promosi,
-    }
+    
+    context = {}
+
+
+    with connection.cursor() as cursor:
+        cursor.execute(
+                """
+                    SELECT  DISTINCT ON (Id) *                    
+                    FROM SIREST.PROMO 
+                    LEFT JOIN SIREST.SPECIAL_DAY_PROMO USING (Id)
+                    LEFT JOIN SIREST.MIN_TRANSACTION_PROMO USING (Id)
+                    LEFT JOIN SIREST.RESTAURANT_PROMO ON Id = Pid
+                    ORDER BY Id
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        rows = cursor.fetchall()
+        promos = [dict(zip(fields, row)) for row in rows]
+        context['promos'] = promos
+
     return render(request, 'daftar_promosi.html', context)
 
-def detail_promo_min_transaksi(request, id):
-    promo = PromoMinTransaksi.objects.get(pk=id)
-    context = {
-        'promo': promo
-    }
+def detail_promo_min_transaksi(request, pid):
+    context = {}
+
+    with connection.cursor() as cursor:
+        cursor.execute(
+                f"""
+                    SELECT *
+                    FROM SIREST.PROMO 
+                    NATURAL JOIN SIREST.MIN_TRANSACTION_PROMO
+                    WHERE id = '{pid}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        promo = dict(zip(fields, row))
+        context['promo'] = promo
     return render(request, 'detail_promosi.html', context)
 
-def detail_promo_hari_spesial(request, id):
-    promo = PromoHariSpesial.objects.get(pk=id)
-    context = {
-        'promo': promo
-    }
+def detail_promo_hari_spesial(request, pid):
+    context = {}
+
+    with connection.cursor() as cursor:
+        cursor.execute(
+                f"""
+                    SELECT *
+                    FROM SIREST.PROMO 
+                    NATURAL JOIN SIREST.SPECIAL_DAY_PROMO
+                    WHERE id = '{pid}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        promo = dict(zip(fields, row))
+        context['promo'] = promo
     return render(request, 'detail_promosi.html', context)
 
-def ubah_promo_min_transaksi(request, id):
-    promo = PromoMinTransaksi.objects.get(pk=id)
-    judul = 'Ubah Promo Min Transaksi'
-    initial_fields = {
-        'nama_promo': promo.nama_promo,
-        'diskon': promo.diskon,
-        'min_transaksi': promo.min_transaksi
-    }
-    promo_form = PromoMinTransaksiForm(request.POST or None, initial=initial_fields)
+def ubah_promo_min_transaksi(request, pid):
+    with connection.cursor() as cursor:
+        cursor.execute(
+                f"""
+                    SELECT *
+                    FROM SIREST.PROMO 
+                    NATURAL JOIN SIREST.MIN_TRANSACTION_PROMO
+                    WHERE id = '{pid}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        promo = dict(zip(fields, row))
+
+    
     if request.method == 'POST':
-        
-        promo.diskon = request.POST.get('diskon')
-        promo.min_transaksi = request.POST.get('min_transaksi')
-        promo.save()
+        discount = request.POST.get('discount')
+        minimumtransactionnum = request.POST.get('minimumtransactionnum')
+        with transaction.atomic():
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"""
+                        UPDATE SIREST.PROMO 
+                        SET discount = {discount}
+                        WHERE id = '{pid}'
+                    """
+                ) 
+                cursor.execute(
+                    f"""
+                        UPDATE SIREST.MIN_TRANSACTION_PROMO 
+                        SET minimumtransactionnum = {minimumtransactionnum}
+                        WHERE id = '{pid}'
+                    """
+                ) 
         return redirect('riwayat_dan_promo:daftar_promosi')
-       
-
-    promo_form.fields['nama_promo'].disabled = True
-    promo_form.fields['nama_promo'].required = False
-
+    
     return render(request, 'ubah_promosi.html', 
-            {'promo_form':promo_form, 'judul': judul})
+            {'promo':promo})
 
-def ubah_promo_hari_spesial(request, id):
-    promo = PromoHariSpesial.objects.get(pk=id)
-    judul = 'Ubah Promo Hari Spesial'
-    initial_fields = {
-        'nama_promo': promo.nama_promo,
-        'diskon': promo.diskon,
-        'tanggal_spesial': promo.tanggal_spesial
-    }
-    promo_form = PromoHariSpesialForm(request.POST or None, initial=initial_fields)
+def ubah_promo_hari_spesial(request, pid):
+    with connection.cursor() as cursor:
+        cursor.execute(
+                f"""
+                    SELECT *
+                    FROM SIREST.PROMO 
+                    NATURAL JOIN SIREST.SPECIAL_DAY_PROMO
+                    WHERE id = '{pid}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        promo = dict(zip(fields, row))
+
+    
     if request.method == 'POST':
-            
-        promo.diskon = request.POST.get('diskon')
-        promo.save()
+        discount = request.POST.get('discount')
+        with transaction.atomic():
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"""
+                        UPDATE SIREST.PROMO 
+                        SET discount = {discount}
+                        WHERE id = '{pid}'
+                    """
+                ) 
         return redirect('riwayat_dan_promo:daftar_promosi')
-            
-
-    promo_form.fields['nama_promo'].disabled = True   
-    promo_form.fields['tanggal_spesial'].disabled = True
-
-    promo_form.fields['nama_promo'].required = False   
-    promo_form.fields['tanggal_spesial'].required = False
-
+    
     return render(request, 'ubah_promosi.html', 
-            {'promo_form':promo_form, 'judul': judul})
+            {'promo':promo})
 
+def hapus_promo(request, pid):
+    with transaction.atomic():
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f"""
+                    DELETE FROM SIREST.SPECIAL_DAY_PROMO 
+                    WHERE id = '{pid}'
+                """
+            ) 
+            cursor.execute(
+                f"""
+                    DELETE FROM SIREST.MIN_TRANSACTION_PROMO 
+                    WHERE id = '{pid}'
+                """
+            )
+            cursor.execute(
+                f"""
+                    DELETE FROM SIREST.PROMO 
+                    WHERE id = '{pid}'
+                """
+            )
+    return redirect('riwayat_dan_promo:daftar_promosi')
 
 def daftar_promo_restoran(request):
     promosi = Promo.objects.all()

@@ -13,11 +13,21 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <h1>{{judul}}</h1>
+    <h1></h1>
     <form action="" method="POST">
-        {% csrf_token %}
-        {{promo_form.as_p}}
-        <button type="submit">Simpan</button>
+      <h3>FORM PROMO {{jenis}}</h3>
+  
+      {% csrf_token %}
+      {{ promo_form.as_p }}
+      
+      {% if messages %}
+      <ul>
+            {% for message in messages %}
+                  <li class="text-red-700">{{ message }}</li>
+            {% endfor %}
+      </ul>
+      {% endif %} 
+      <button type="submit"><span>SIMPAN</span></button>
     </form>
 
     

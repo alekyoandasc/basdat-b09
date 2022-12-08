@@ -14,34 +14,38 @@
 </head>
 <body>
     <h1>Daftar Promosi</h1>
-    <table style="margin-left:auto; margin-right: auto;">
+    <table class="table">
         <thead>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Jenis</th>
-            <th>Aksi</th>
+            <th scope="col">No</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Jenis</th>
+            <th scope="col">Aksi</th>
         </thead>
         <tbody>
-            {% for promo in daftar_promo%}
+            {% for promo in promos%}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ promo.nama_promo }}</td>
-                <td>{% if promo.tipe_promo == 'm' %} Promo Minimum Transaksi {% else %} Promo Hari Spesial {% endif %}</td>
-                <td></td>
+                <td>{{ promo.promoname }}</td>
+                <td>{% if not promo.date %} Promo Minimum Transaksi {% else %} Promo Hari Spesial {% endif %}</td>
                 <td>
-                    {% if promo.tipe_promo == 'm' %} 
-                    <a href="/riwayat_dan_promo/promo_min_transaksi/{{promo.id}}">[Detail]</a> 
-                    <br>
-                    <a href="/riwayat_dan_promo/ubah_promo_min_transaksi/{{promo.id}}">[Ubah]</a>
+                    {% if not promo.date %} 
+                        <a href="/riwayat_dan_promo/promo_min_transaksi/{{promo.id}}">[Detail]</a> 
+                        <br>
+                        {% if request.COOKIES.user_type == 'admin' %}
+                            <a href="/riwayat_dan_promo/ubah_promo_min_transaksi/{{promo.id}}">[Ubah]</a>
+                        {% endif %}
+                    
                     {% else %}
-                    <a href="/riwayat_dan_promo/promo_hari_spesial/{{promo.id}}">[Detail]</a> 
-                    <br>
-                    <a href="/riwayat_dan_promo/ubah_promo_hari_spesial/{{promo.id}}">[Ubah]</a>
+                        <a href="/riwayat_dan_promo/promo_hari_spesial/{{promo.id}}">[Detail]</a> 
+                        <br>
+                        {% if request.COOKIES.user_type == 'admin' %}
+                            <a href="/riwayat_dan_promo/ubah_promo_hari_spesial/{{promo.id}}">[Ubah]</a>
+                        {% endif %}
                     {% endif %}
                     <br>
-                    <a href="/hapus">
-                        [Hapus]
-                    </a>
+                    {% if request.COOKIES.user_type == 'admin' and not promo.rname %}
+                        <a href="/riwayat_dan_promo/hapus_promo/{{promo.id}}">[Hapus]</a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
