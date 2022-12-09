@@ -12,12 +12,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
+<style>
+    
+</style>
 <body>
     <h1>{{judul}}</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        {{promo_form.as_p}}
-        <button type="submit">Simpan</button>
+        <label for="jenis">Jenis Promo</label>
+        <input name="jenis"
+        id="jenis" 
+        type="text" 
+        placeholder="Beli Banyak Lebih Murah"
+        class="form-control"
+        aria-describedby="inputGroupPrepend" 
+        disabled=True
+        value="{% if promo.date %} Promo Hari Spesial {% else %} Promo Minimum Transaksi {% endif %}"
+        >
+
+        <label for="promoname">Nama Promo</label>
+        <input name="promoname"
+        id="promoname" 
+        type="text" 
+        placeholder="Beli Banyak Lebih Murah"
+        class="form-control"
+        aria-describedby="inputGroupPrepend" 
+        disabled=True
+        value="{{promo.promoname}}"
+        >
+
+        <label for="discount">Diskon</label>
+        <input name="discount"
+        id="discount" 
+        type="number" 
+        placeholder="1-100"
+        class="form-control"
+        aria-describedby="inputGroupPrepend" 
+        value="{{promo.discount}}"
+        required=True
+        >
+
+        {% if not promo.date %} 
+            <label for="minimumtransactionnum">Jumlah Minimum Transaksi</label>
+            <input name="minimumtransactionnum"
+            id="minimumtransactionnum" 
+            type="number" 
+            placeholder="0-infinity"
+            class="form-control"
+            aria-describedby="inputGroupPrepend" 
+            value="{{promo.minimumtransactionnum}}"
+            required=True
+            >
+        {% endif %}
+        <br>
+
+        {% if messages %}
+        <ul>
+              {% for message in messages %}
+                    <li class="text-red-700">{{ message }}</li>
+              {% endfor %}
+        </ul>
+        {% endif %} 
+        <button type="submit"><span>SIMPAN</span></button>
     </form>
 
     

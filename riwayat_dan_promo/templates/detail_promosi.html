@@ -17,17 +17,18 @@
 <body>
     <div class="flex-row justify-content-center">
         <h1>Detail Promosi</h1>
-        <p><span class="font-weight-bold">Jenis Promosi: </span>{% if promo.tipe_promo == 'm' %} Promo Minimum Transaksi {% else %} Promo Hari Spesial {% endif %}</p>
-        <p><span class="font-weight-bold">Nama Promosi: </span> {{promo.nama_promo}}</p>
-        <p><span class="font-weight-bold">Diskon: </span> {{promo.diskon}}</p>
-        {% if promo.tipe_promo == 'm' %} 
-        <p><span class="font-weight-bold">Minimum Transaksi: </span> {{promo.min_transaksi}}</p>
+        <p><span class="font-weight-bold">Jenis Promosi: </span>{% if not promo.date %} Promo Minimum Transaksi {% else %} Promo Hari Spesial {% endif %}</p>
+        <p><span class="font-weight-bold">Nama Promosi: </span> {{promo.promoname}}</p>
+        <p><span class="font-weight-bold">Diskon: </span> {{promo.discount}}%</p>
+        {% if not promo.date %} 
+            <p><span class="font-weight-bold">Minimum Transaksi: </span> {{promo.minimumtransactionnum}}</p>
         {% else %} 
-        <p><span class="font-weight-bold">Tanggal Berlangsung: </span> {{promo.tanggal_spesial}}</p>
+            <p><span class="font-weight-bold">Tanggal Berlangsung: </span> {{promo.date}}</p>
         {% endif %}
         
         
         <a href="{% url 'riwayat_dan_promo:daftar_promosi'%}">[Kembali]</a>
+        
     </div>
 
    

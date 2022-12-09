@@ -550,7 +550,7 @@ class KurirForm(forms.Form):
                   }
             ),
       )
-      TRANS = [('Motor', 'Motor'), ('Mobil', 'Mobil')]
+      TRANS = [('motor', 'Motor'), ('mobil', 'Mobil')]
       trans_type = forms.ChoiceField(
             choices=TRANS, 
             label='Tipe Kendaraan',

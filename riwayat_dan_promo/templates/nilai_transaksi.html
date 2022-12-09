@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <form action="">
+    <h1>Penilaian </h1>
+    <form action="" method="POST">
         {% csrf_token %}
-        <label for="nilaiPesanan">Nilai:</label>
-        <select name="nilaiPesanan" id="">
+        <label for="rating">Nilai:</label>
+        <select name="rating" id="">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>

@@ -16,26 +16,25 @@
     <div class="d-flex flex-column justify-content-center">
         <h1>Daftar Promo Restoran</h1>
         <a style="margin: auto;"href="{% url 'riwayat_dan_promo:tambah_promo_restoran' %}">[Tambah]</a>
-        <table style="margin-left:auto; margin-right: auto;">
+        <table class="table">
             <thead>
-                <th>No</th>
-                <th>Nama Promosi</th>
-                <th>Periode Promosi</th>
-                <th>Aksi</th>
+                <th scope="col">No</th>
+                <th scope="col">Nama Promosi</th>
+                <th scope="col">Periode Promosi</th>
+                <th scope="col">Aksi</th>
             </thead>
             <tbody>
-                {% for promo in daftar_promo%}
+                {% for promo in resto_promos%}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ promo.nama_promo }}</td>
-                    <td> 2022-08-15 s.d. 2022-08-20 </td>
-                    <td></td>
+                    <td>{{ promo.promoname }}</td>
+                    <td> {{ promo.start|date:'Y-m-d H:i:s'}} s.d. {{ promo.endpromo|date:'Y-m-d H:i:s' }} </td>
                     <td>
-                        <a href="/riwayat_dan_promo/promo_restoran/{{promo.id}}">[Detail]</a> 
+                        <a href="/riwayat_dan_promo/detail_promo_restoran/{{promo.id}}">[Detail]</a> 
                         <br>
                         <a href="/riwayat_dan_promo/ubah_promo_restoran/{{promo.id}}">[Ubah]</a>
                         <br>
-                        <a href="/hapus">
+                        <a href="/riwayat_dan_promo/hapus_promo_restoran/{{promo.id}}">
                             [Hapus]
                         </a>
                     </td>

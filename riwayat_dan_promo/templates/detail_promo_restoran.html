@@ -17,16 +17,20 @@
 <body>
     <div class="flex-row justify-content-center">
         <h1>Detail Promo Restoran</h1>
-        <p><span class="font-weight-bold">Nama Promosi: </span> {{promo.nama_promo}}</p>
-        <p><span class="font-weight-bold">Jenis Promosi: </span>{% if promo.tipe_promo == 'm' %} Promo Minimum Transaksi {% else %} Promo Hari Spesial {% endif %}</p>
+        <p><span class="font-weight-bold">Nama Promosi: </span> {{resto_promo.promoname}}</p>
+        <p><span class="font-weight-bold">Jenis Promosi: </span>{% if not resto_promo.date %} Promo Minimum Transaksi {% else %} Promo Hari Spesial {% endif %}</p>
 
-        <p><span class="font-weight-bold">Diskon: </span> {{promo.diskon}}</p>
-        <p><span class="font-weight-bold">Tanggal Mulai: </span>15-08-2022</p>
-        <p><span class="font-weight-bold">Tanggal Berakhir: </span>20-08-2022</p>
+        <p><span class="font-weight-bold">Diskon: </span> {{resto_promo.discount}}%</p>
+        <p><span class="font-weight-bold">Tanggal Mulai: </span>{{resto_promo.start|date:'Y-m-d H:i:s'}}</p>
+        <p><span class="font-weight-bold">Tanggal Berakhir: </span>{{resto_promo.endpromo|date:'Y-m-d H:i:s'}}</p>
         
         
         
         <a href="{% url 'riwayat_dan_promo:daftar_promo_restoran'%}">[Kembali]</a>
+        <br>
+        <a href="/riwayat_dan_promo/ubah_promo_restoran/{{resto_promo.id}}">[Ubah]</a>
+        <br>
+        <a href="/riwayat_dan_promo/hapus_promo_restoran/{{resto_promo.id}}">[Hapus]</a>
     </div>
 
    
