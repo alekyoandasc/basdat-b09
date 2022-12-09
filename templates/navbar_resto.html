@@ -14,8 +14,8 @@
         Jam Operasional
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/jam-operasional/create">Daftar Jam Operasional</a></li>
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Buat Jam Operasional</a></li>
+        <li><a class="dropdown-item" href="/jam-operasional/read">Daftar Jam Operasional</a></li>
+        <li><a class="dropdown-item" href="/jam-operasional/create">Buat Jam Operasional</a></li>
       </ul>
     </li>
     <li class="nav-item dropdown">
@@ -47,8 +47,8 @@
         Pesanan
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Pesanan Berlangsung</a></li>
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Riwayat Pesanan</a></li>
+        <li><a class="dropdown-item" href="/transaksi-pesanan-restoran/read">Pesanan Berlangsung</a></li>
+        <li><a class="dropdown-item" href="{% url 'riwayat_dan_promo:riwayat_transaksi' %}">Riwayat Pesanan</a></li>
 
       </ul>
     </li>
@@ -71,17 +71,24 @@
       </li>
     <li class="nav-item">
       <a
-      class="nav-link me-3 ms-3" href="#"
+      class="nav-link me-3 ms-3" href="{% url 'lihat_saldo' %}"
       >
         RestoPay
       </a>
     </li>
  
-    <li class="nav-item">
-
-        <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">[RESTO]{{request.COOKIES.user_email}}</a>
-        <a class="nav-link me-3 ms-3" href="{% url 'logout_pengguna' %}">Logout</a>
-
-
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+      href="#"
+      id="navbarDropdown"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      [RESTO] {{request.COOKIES.user_email}}
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'logout_pengguna' %}">Logout</a></li>
+      </ul>
+      
     </li>
   </ul>

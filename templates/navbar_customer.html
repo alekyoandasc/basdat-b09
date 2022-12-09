@@ -4,7 +4,7 @@
     </li>
     <li class="nav-item">
       <a
-      class="nav-link me-3 ms-3" href="/"
+      class="nav-link me-3 ms-3" href="{% url 'restoran:read_daftar_restoran'%}"
       >
         Restoran & Makanan
       </a>
@@ -21,22 +21,32 @@
         Pesanan
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/jam-operasional/create">Buat Pesanan</a></li>
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Pesanan Berlangsung</a></li>
+        <li><a class="dropdown-item" href="{% url 'show_pengisian_alamat'%}">Buat Pesanan</a></li>
+        <li><a class="dropdown-item" href="/transaksi-pesanan-restoran/read">Pesanan Berlangsung</a></li>
         <li><a class="dropdown-item" href="{% url 'riwayat_dan_promo:riwayat_transaksi'%}">Riwayat Pesanan</a></li>
 
       </ul>
     </li>
     <li class="nav-item">
       <a
-      class="nav-link me-3 ms-3" href="/"
+      class="nav-link me-3 ms-3" href="{% url 'lihat_saldo' %}"
       >
         RestoPay
       </a>
     </li>
  
-    <li class="nav-item">
-      <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">[CUSTOMER]{{request.COOKIES.user_email}}</a>
-      <a class="nav-link me-3 ms-3" href="{% url 'logout_pengguna' %}">Logout</a>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+      href="#"
+      id="navbarDropdown"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      [CUSTOMER] {{request.COOKIES.user_email}}
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'logout_pengguna' %}">Logout</a></li>
+      </ul>
+      
     </li>
   </ul>
