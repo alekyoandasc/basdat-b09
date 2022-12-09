@@ -20,8 +20,9 @@ urlpatterns = [
       path('hapus_promo/<pid>', hapus_promo, name="hapus_promo"),
       path('daftar_promo_restoran/', daftar_promo_restoran, name='daftar_promo_restoran'),
       path('tambah_promo_restoran/', tambah_promo_restoran, name='tambah_promo_restoran'),
-      path('promo_restoran/<id>', detail_promo_restoran, name='detail_promo_restoran'),
-      path('ubah_promo_restoran/<id>', ubah_promo_restoran, name="ubah_promo_restoran")
+      path('detail_promo_restoran/<pid>', detail_promo_restoran, name='detail_promo_restoran'),
+      path('ubah_promo_restoran/<pid>', ubah_promo_restoran, name="ubah_promo_restoran"),
+      path('hapus_promo_restoran/<pid>', hapus_promo_restoran, name="hapus_promo_restoran"),
 
       
 ]

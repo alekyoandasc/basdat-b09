@@ -416,22 +416,176 @@ def hapus_promo(request, pid):
     return redirect('riwayat_dan_promo:daftar_promosi')
 
 def daftar_promo_restoran(request):
-    promosi = Promo.objects.all()
-    context = {
-        'daftar_promo': promosi,
-    }
+    context = {}
+
+
+    with connection.cursor() as cursor:
+        
+        resto_email = request.COOKIES.get('user_email')
+        cursor.execute(
+                f"""
+                    SELECT  *                    
+                    FROM SIREST.PROMO 
+                    LEFT JOIN SIREST.SPECIAL_DAY_PROMO USING (Id)
+                    LEFT JOIN SIREST.MIN_TRANSACTION_PROMO USING (Id)
+                    JOIN SIREST.RESTAURANT_PROMO ON Id = PId
+                    NATURAL JOIN SIREST.RESTAURANT
+                    WHERE email = '{resto_email}'
+                    ORDER BY Id
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        rows = cursor.fetchall()
+        resto_promos = [dict(zip(fields, row)) for row in rows]
+        context['resto_promos'] = resto_promos
+
     return render(request, 'daftar_promo_restoran.html', context)
 
-def detail_promo_restoran(request, id):
-    promo = Promo.objects.get(pk=id)
-    context = {
-        'promo': promo
-    }
+def detail_promo_restoran(request, pid):
+    context = {}
+    with connection.cursor() as cursor:
+        
+        resto_email = request.COOKIES.get('user_email')
+        cursor.execute(
+                f"""
+                    SELECT  *                    
+                    FROM SIREST.PROMO 
+                    LEFT JOIN SIREST.SPECIAL_DAY_PROMO USING (Id)
+                    LEFT JOIN SIREST.MIN_TRANSACTION_PROMO USING (Id)
+                    JOIN SIREST.RESTAURANT_PROMO ON Id = PId
+                    NATURAL JOIN SIREST.RESTAURANT
+                    WHERE email = '{resto_email}' AND Id = '{pid}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        resto_promo = dict(zip(fields, row))
+        context['resto_promo'] = resto_promo
     return render(request, 'detail_promo_restoran.html', context)
 
 def tambah_promo_restoran(request):
-    return render(request, 'tambah_promo_restoran.html')
+    context = {}
 
 
-def ubah_promo_restoran(request, id):
-    return render(request, 'ubah_promo_restoran.html')
+    with connection.cursor() as cursor:
+        cursor.execute(
+                """
+                    SELECT  DISTINCT ON (Id) *                    
+                    FROM SIREST.PROMO 
+                    LEFT JOIN SIREST.SPECIAL_DAY_PROMO USING (Id)
+                    LEFT JOIN SIREST.MIN_TRANSACTION_PROMO USING (Id)
+                    LEFT JOIN SIREST.RESTAURANT_PROMO ON Id = Pid
+                    ORDER BY Id
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        rows = cursor.fetchall()
+        promos = [dict(zip(fields, row)) for row in rows]
+        context['promos'] = promos
+
+
+        email = request.COOKIES.get('user_email')
+        cursor.execute(
+                f"""
+                    SELECT *                  
+                    FROM SIREST.RESTAURANT
+                    WHERE email = '{email}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        resto = dict(zip(fields, row))
+        rname = resto['rname']
+        rbranch = resto['rbranch']
+
+    if request.method == "POST":
+        promo = request.POST.get('promo')
+        pid = promo.split("/")[0]
+        start = request.POST.get('start')
+        endpromo = request.POST.get('endpromo')
+
+        with transaction.atomic():
+            with connection.cursor() as cursor:
+                try:
+                    cursor.execute(f"""
+                            INSERT INTO SIREST.RESTAURANT_PROMO
+                            VALUES ('{rname}', '{rbranch}', '{pid}', '{start}', '{endpromo}')
+                    """)
+            
+                    return redirect('riwayat_dan_promo:daftar_promo_restoran')
+                except Exception as e:
+                    messages.info(request, e) 
+
+
+    return render(request, 'tambah_promo_restoran.html', context)
+
+
+def ubah_promo_restoran(request, pid):
+
+    context = {}
+    with connection.cursor() as cursor:
+        
+        resto_email = request.COOKIES.get('user_email')
+        
+        cursor.execute(
+                f"""
+                    SELECT  *                    
+                    FROM SIREST.PROMO 
+                    LEFT JOIN SIREST.SPECIAL_DAY_PROMO USING (Id)
+                    LEFT JOIN SIREST.MIN_TRANSACTION_PROMO USING (Id)
+                    JOIN SIREST.RESTAURANT_PROMO ON Id = PId
+                    NATURAL JOIN SIREST.RESTAURANT
+                    WHERE email = '{resto_email}' AND Id = '{pid}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        resto_promo = dict(zip(fields, row))
+        rname = resto_promo['rname']
+        rbranch = resto_promo['rbranch']
+        context['resto_promo'] = resto_promo
+    if request.method == "POST":
+        start = request.POST.get('start')
+        endpromo = request.POST.get('endpromo')
+
+        with transaction.atomic():
+            with connection.cursor() as cursor:
+                try:
+                    cursor.execute(f"""
+                            UPDATE SIREST.RESTAURANT_PROMO
+                            SET start = '{start}', endpromo = '{endpromo}'
+                            WHERE rname = '{rname}' AND rbranch = '{rbranch}' AND pid = '{pid}'
+                    """)
+            
+                    return redirect('riwayat_dan_promo:daftar_promo_restoran')
+                except Exception as e:
+                    messages.info(request, e) 
+
+    return render(request, 'ubah_promo_restoran.html', context)
+
+
+def hapus_promo_restoran(request, pid):
+    resto_email = request.COOKIES.get('user_email')
+    with connection.cursor() as cursor:
+        cursor.execute(
+                f"""
+                    SELECT *                  
+                    FROM SIREST.RESTAURANT
+                    WHERE email = '{resto_email}'
+                """
+        ) 
+        fields = [field_name[0] for field_name in cursor.description]
+        row = cursor.fetchone()
+        resto = dict(zip(fields, row))
+        rname = resto['rname']
+        rbranch = resto['rbranch']
+    with transaction.atomic():
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f"""
+                    DELETE FROM SIREST.RESTAURANT_PROMO 
+                    WHERE rname = '{rname}' AND rbranch = '{rbranch}' AND pid = '{pid}'
+                """
+            ) 
+
+    return redirect('riwayat_dan_promo:daftar_promo_restoran')
