@@ -1,6 +1,6 @@
 <ul class="navbar-nav ms-auto my-2">
     <li class="nav-item">
-      <a class="nav-link me-3 ms-3" href="/">Dashboard</a>
+      <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">Dashboard</a>
     </li>
     <li class="nav-item dropdown">
       <a
@@ -14,13 +14,13 @@
         Restoran
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/restopay/lihat-saldo">Kategori Resto</a></li>
-        <li><a class="dropdown-item" href="/restopay/add-saldo">Buat Kategori Resto</a></li>
-        <li><a class="dropdown-item" href="/restopay/tarik-saldo">Kategori Makanan</a></li>
-        <li><a class="dropdown-item" href="/restopay/tarik-saldo">Buat Kategori Makanan</a></li>
-        <li><a class="dropdown-item" href="/restopay/tarik-saldo">Bahan Makanan</a></li>
-        <li><a class="dropdown-item" href="/restopay/tarik-saldo">Buat Bahan Makanan</a></li>
-        <li><a class="dropdown-item" href="/restopay/tarik-saldo">Resto dan Makanan</a></li>
+        <li><a class="dropdown-item" href="{% url 'read_kategori_restoran' %}">Kategori Resto</a></li>
+        <li><a class="dropdown-item" href="{% url 'create_kategori_resto' %}">Buat Kategori Resto</a></li>
+        <li><a class="dropdown-item" href="{% url 'show_kategori_makanan' %}">Kategori Makanan</a></li>
+        <li><a class="dropdown-item" href="{% url 'show_create_kategori_makanan_page'%}">Buat Kategori Makanan</a></li>
+        <li><a class="dropdown-item" href="{% url 'read_bahan_makanan'%}">Bahan Makanan</a></li>
+        <li><a class="dropdown-item" href="{% url 'create_bahan_makanan'%}">Buat Bahan Makanan</a></li>
+        <li><a class="dropdown-item" href="{% url 'restoran:read_daftar_restoran'%}">Resto dan Makanan</a></li>
 
       </ul>
     </li>
@@ -36,8 +36,8 @@
         Promo
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/jam-operasional/create">Daftar Promo</a></li>
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Buat Promo</a></li>
+        <li><a class="dropdown-item" href="{% url 'riwayat_dan_promo:daftar_promosi' %}">Daftar Promo</a></li>
+        <li><a class="dropdown-item" href="{% url 'riwayat_dan_promo:buat_promo' %}">Buat Promo</a></li>
       </ul>
     </li>
     <li class="nav-item dropdown">
@@ -52,18 +52,23 @@
         Pesanan
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/transaksi-pesanan-restoran/read">Tarif Pengiriman</a></li>
-        <li><a class="dropdown-item" href="/aset">Buat Tarif Pengiriman</a></li>
+        <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:read'%}">Tarif Pengiriman</a></li>
+        <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:create'%}">Buat Tarif Pengiriman</a></li>
       </ul>
     </li>
  
-    <li class="nav-item">
-      {% if request.COOKIES.user_type %}
-        <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">{{request.COOKIES.user_type}}</a>
-        <a class="nav-link me-3 ms-3" href="{% url 'logout_pengguna' %}">Logout</a>
-
-      {% else %}
-        <a href="nav-link me-3 ms-3" href="{% url 'login_pengguna' %}">Login</a>
-      {% endif %} 
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+      href="#"
+      id="navbarDropdown"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      [ADMIN] {{request.COOKIES.user_email}}
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'logout_pengguna' %}">Logout</a></li>
+      </ul>
+      
     </li>
   </ul>

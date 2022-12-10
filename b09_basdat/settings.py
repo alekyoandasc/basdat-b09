@@ -89,20 +89,35 @@ WSGI_APPLICATION = 'b09_basdat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+if PRODUCTION:
+    PGDATABASE = os.getenv('PGDATABASE')
+    PGUSER = os.getenv('PGUSER')
+    PGPASSWORD = os.getenv('PGPASSWORD')
+    PGHOST = os.getenv('PGHOST')
+    PGPORT = os.getenv('PGPORT')
+else:
+    # nama database di wsl
+    PGDATABASE = 'localb09'
+    PGUSER = 'postgres'
+    # password user postgres di wsl
+    PGPASSWORD = 'Adrian2710#'
+    PGHOST = '127.0.0.1'
+    PGPORT = '5432'
+
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
 
-    # Untuk production/deployment
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('PGDATABASE'),
-        'USER': os.getenv('PGUSER'),
-        'PASSWORD': os.getenv('PGPASSWORD'),
-        'HOST': os.getenv('PGHOST'),
-        'PORT': os.getenv('PGHOST'),
+        'NAME': PGDATABASE,
+        'USER': PGUSER,
+        'PASSWORD': PGPASSWORD,
+        'HOST': PGHOST,
+        'PORT': PGPORT,
     },
     
     # Untuk build
@@ -112,7 +127,7 @@ DATABASES = {
     #     'NAME': 'tk4',
     #     'USER': 'postgres',
     #     # password postgres kalian masing2
-    #     'PASSWORD': 'Zakirobinale123',
+    #     'PASSWORD': 'pass',
     #     'HOST': '127.0.0.1',
     #     'PORT': '5432',
     # }

@@ -17,40 +17,47 @@
     <div class="d-flex  justify-content-center">
         <form action="" method="POST">
             {% csrf_token %}
-            <label for="nama_promo">Nama Promo</label>
-            <select name="" id="nama_promo">
-                <option value="Promo 12.12" selected>Promo 12.12</option>
-                <option value="Promo 12.12">Promo Beli Banyak Lebih Murah</option>
-                <option value="Promo 12.12">Promo Hari Kemerdekaan</option>
+            <label for="promo">Nama Promo</label>
+            <select name="promo" id="promo">
+                {% for promo in promos %}
+                <option value="{{promo.id}}/{{promo.discount}}/{{promo.date|date:'Y-m-d'}}/{{promo.minimumtransactionnum}}">{{promo.promoname}}</option>
+                {% endfor %}
             </select>
 
 
             <br>
-            <label for="jenis_promo" >Jenis Promo</label>
-            <input type="text" id="jenis_promo" value="Promo Minimum Transaksi">
+            <label for="promotype" >Jenis Promo</label>
+            <input name="promotype" type="text" id="promotype"  disabled=True>
     
             <br>
-            <label for="diskon">Diskon</label>
-            <input type="number" id="diskon" value="12">
+            <label for="discount">Diskon</label>
+            <input name="discount" type="number" id="discount"  disabled=True>
             
             <br>
-            {%if True %}
-            <label for="min_transakso">Minimum Transaksi</label>
-            <input type="number" id="min_transakso" value="100">
-            {% else %}
-            <label for="tanggal_spesial">Tanggal Spesial</label>
-            <input type="date" id="tanggal_spesial">
-            {% endif %}
+
+            <label id ="minimumtransactionnum_label" for="minimumtransactionnum">Minimum Transaksi</label>
+            <input type="number" id="minimumtransactionnum" disabled=True>
+
+            <label  id="date_label" for="tanggal_spesial" >Tanggal Spesial</label>
+            <input type="date" id="date" disabled=True >
+
     
             <br>
-            <label for="tanggal_mulai">Tanggal Mulai</label>
-            <input type="date" id="tanggal_mulai">
+            <label for="start">Tanggal Mulai</label>
+            <input type="datetime-local" id="start" name="start" required>
     
             <br>
-            <label for="tanggal_akhir">Tanggal Akhir</label>
-            <input type="date" id="tanggal_akhir">
+            <label for="endpromo">Tanggal Akhir</label>
+            <input type="datetime-local" id="endpromo" name="endpromo" required>
             <br>
-            <button type="submit">Simpan</button>
+            {% if messages %}
+            <ul>
+                    {% for message in messages %}
+                        <li class="text-red-700">{{ message }}</li>
+                    {% endfor %}
+            </ul>
+            {% endif %} 
+            <button type="submit"><span>SIMPAN</span></button>
         </form>
     </div>
     
@@ -58,5 +65,38 @@
     
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#date_label').hide();
+        $('#date').hide();
+        $('#minimumtransactionnum_label').hide();
+        $('#minimumtransactionnum').hide();
+
+        $('#promo').change(function(){
+            let promo_data = $(this).val().split("/");
+            $('#discount').attr("value", promo_data[1]);
+            
+
+
+            if (promo_data[2]) {
+                $('#promotype').attr("value", "Promo Hari Spesial");
+                $('#minimumtransactionnum_label').hide();
+                $('#minimumtransactionnum').hide();
+                $('#date_label').show();
+                $('#date').show();
+                $('#date').attr("value", promo_data[2]);
+            } else {
+                $('#promotype').attr("value", "Promo Minimum Transaksi");
+                $('#date_label').hide();
+                $('#date').hide(); 
+                $('#minimumtransactionnum_label').show();
+                $('#minimumtransactionnum').show();
+                $('#minimumtransactionnum').attr("value", promo_data[3]);
+            }
+
+        })
+    })
+</script>
 </html>
 {% endblock content %}

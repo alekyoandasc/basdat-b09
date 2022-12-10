@@ -1,15 +1,10 @@
 <ul class="navbar-nav ms-auto my-2">
     <li class="nav-item">
-      <a class="nav-link me-3 ms-3" href="/">Dashboard</a>
+      <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">Dashboard</a>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item">
       <a
-        class="nav-link dropdown-toggle me-3 ms-3"
-        href="#"
-        id="navbarDropdown"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+      class="nav-link me-3 ms-3" href="{% url 'restoran:read_daftar_restoran'%}"
       >
         Restoran & Makanan
       </a>
@@ -26,31 +21,31 @@
         Pesanan
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Pesanan Berlangsung</a></li>
-        <li><a class="dropdown-item" href="/paket-koin/paket_koin/read">Riwayat Pesanan</a></li>
+        <li><a class="dropdown-item" href="/transaksi-pesanan-restoran/read">Pesanan Berlangsung</a></li>
+        <li><a class="dropdown-item" href="{% url 'riwayat_dan_promo:riwayat_transaksi' %}">Riwayat Pesanan</a></li>
 
       </ul>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item">
       <a
-        class="nav-link dropdown-toggle me-3 ms-3 mr-1"
-        href="#"
-        id="navbarDropdown"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+      class="nav-link me-3 ms-3" href="{% url 'lihat_saldo' %}"
       >
         RestoPay
       </a>
     </li>
  
-    <li class="nav-item">
-      {% if request.COOKIES.user_type %}
-        <a class="nav-link me-3 ms-3" href="{% url 'homepage' %}">{{request.COOKIES.user_type}}</a>
-        <a class="nav-link me-3 ms-3" href="{% url 'logout_pengguna' %}">Logout</a>
-
-      {% else %}
-        <a href="nav-link me-3 ms-3" href="{% url 'login_pengguna' %}">Login</a>
-      {% endif %} 
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+      href="#"
+      id="navbarDropdown"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      [COURIER] {{request.COOKIES.user_email}}
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'logout_pengguna' %}">Logout</a></li>
+      </ul>
+      
     </li>
   </ul>
