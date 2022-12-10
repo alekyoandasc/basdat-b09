@@ -7,7 +7,7 @@
 
 {% block content %}
 <h2>Daftar Pesanan</h2>
-<table>
+<table class="table">
     <tr>
         <th>No</th>
         <th>Nama Makanan</th>
@@ -15,17 +15,19 @@
         <th>Jumlah</th>
         <th>Total</th>
     </tr>
+    {% for pesanan in daftar_pesanan %}
     <tr>
-        <td>1</td>
-        <td>Ayam Goreng</td>
-        <td>5000</td>
-        <td>1</td>
-        <td>5000</td>
+        <td>{{forloop.counter}}</td>
+        <td>{{pesanan.0}}</td>
+        <td>{{pesanan.2}}</td>
+        <td>{{pesanan.1}}</td>
+        <td>{{pesanan.3}}</td>
     </tr>
+    {% endfor %}
 </table>
-<p>Total Harga : {{total}}</p>
-<p>Metode Pengantaran : </p>
-<p>Metode Pembayaran : </p>
+<p>Total Harga : {{total_harga_pesanan}}</p>
+<p>Metode Pengantaran : {{metode_pengantaran}}</p>
+<p>Metode Pembayaran : {{metode_pembayaran}}</p>
 <br>
 <p>Total Diskon : </p>
 <p>Biaya Pengantaran</p>

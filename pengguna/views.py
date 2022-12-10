@@ -5,26 +5,89 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 from django.template import RequestContext
 from django.contrib.auth import authenticate
-
+from django.contrib import messages
 from django.urls import reverse
 from sirest_b09.models import *
 from .forms import AdminForm, PelangganForm, RestoranForm, KurirForm
 from json import dumps
 
+from django.db import connection, transaction
+
 # Create your views here.
 
 def homepage(request):
+
       return render(request, "home.html")
 
 def login_pengguna(request):
       if request.method == "POST":
             # TODO: Validasi autentikasi
-            return redirect('index')
+            with connection.cursor() as cursor:
+                  email = request.POST.get('email')
+                  password = request.POST.get('password')
+                  cursor.execute(f"""
+                        SELECT * 
+                        FROM SIREST.USER_ACC
+                        WHERE email = '{email}'
+                        AND password = '{password}'
+                  """)
+                  fields = [field_name[0] for field_name in cursor.description]
+                  row = cursor.fetchone()
+                  if row is not None:
+                        user = dict(zip(fields, row))
+                        response = HttpResponseRedirect(reverse("homepage"))
+                        response.set_cookie('user_name', user['fname']+ " " + user['lname'])
+
+                        cursor.execute(f"""
+                              SELECT * 
+                              FROM SIREST.ADMIN
+                              WHERE email = '{email}'
+                        """)
+                        row = cursor.fetchone()
+                        if row is not None:
+                              response.set_cookie('user_type', 'admin')
+                              return response
+
+                        cursor.execute(f"""
+                              SELECT * 
+                              FROM SIREST.CUSTOMER
+                              WHERE email = '{email}'
+                        """)
+                        row = cursor.fetchone()
+                        if row is not None:
+                              response.set_cookie('user_type', 'customer')
+                              return response
+
+                        cursor.execute(f"""
+                              SELECT * 
+                              FROM SIREST.RESTAURANT
+                              WHERE email = '{email}'
+                        """)
+                        row = cursor.fetchone()
+                        if row is not None:
+                              response.set_cookie('user_type', 'restaurant')
+                              return response
+                        
+                        cursor.execute(f"""
+                              SELECT * 
+                              FROM SIREST.COURIER
+                              WHERE email = '{email}'
+                        """)
+                        row = cursor.fetchone()
+                        if row is not None:
+                              response.set_cookie('user_type', 'courier')
+                        return response
+                  else:
+                        messages.info(request, 'Email atau password tidak valid')
+                        
       return render(request, 'login.html')
 
 def logout_pengguna(request):
       # TODO: Logout pengguna
-      return redirect('index')
+      response = HttpResponseRedirect(reverse('login_pengguna'))
+      response.delete_cookie('user_name')
+      response.delete_cookie('user_type')
+      return response
 
 def regis_admin(request):
       registered = False

@@ -1,11 +1,26 @@
 from django.shortcuts import render, redirect
 from riwayat_dan_promo.forms import *
 from riwayat_dan_promo.models import *
+from django.db import connection, transaction
 # Create your views here.
 
 
+
+def fetch_transaksi():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+                SELECT * 
+                FROM SIREST.transaction 
+            """
+        )
+        rows = cursor.fetchall()
+
+        return rows
+
 def riwayat_transaksi(request):
-    daftar_transaksi = [2, 3, 4, 5]
+    daftar_transaksi = fetch_transaksi()
+    
     context = {
         'daftar_transaksi': daftar_transaksi
     }
