@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from riwayat_dan_promo.forms import *
-from riwayat_dan_promo.models import *
 from django.db import connection, transaction
 from django.contrib import messages
 

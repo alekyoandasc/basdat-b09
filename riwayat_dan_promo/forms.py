@@ -1,5 +1,5 @@
 from django import forms
-from riwayat_dan_promo.models import *
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class PromoMinTransaksiForm(forms.Form):
       
