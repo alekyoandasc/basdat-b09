@@ -18,40 +18,52 @@
 {% endblock meta %}
 
 {% block content %}
-
 <div class="container">
 <h1 align="center">Ringkasan Pesanan</h1>
   <div class="container">
+    {% for res in query1 %}
     <p>Waktu Pemesanan: </p>
     <br>
-    <p>Nama Pelanggan: </p>
-    <p>Jalan: </p>
-    <p>Kecamatan: </p>
-    <p>Kota: </p>
-    <p>Provinsi: </p>
+    <p>Nama Pelanggan: {{ res.fname }} {{ res.lname }}</p>
+    <p>Jalan: {{ res.street }}</p>
+    <p>Kecamatan: {{ res.district }}</p>
+    <p>Kota: {{ res.city }}</p>
+    <p>Provinsi: {{ res.province }}</p>
+    {% endfor %}
     <br>
-    <p>Restoran: </p>
-    <p>Jalan: </p>
-    <p>Kecamatan: </p>
-    <p>Kota: </p>
-    <p>Provinsi: </p>
+    {% for res in query2 %}
+    <p>Restoran: {{ res.rname }} {{ res.rbranch }}</p>
+    <p>Jalan: {{ res.street }}</p>
+    <p>Kecamatan: {{ res.district }}</p>
+    <p>Kota: {{ res.city }}</p>
+    <p>Provinsi: {{ res.province }}</p>
+    {% endfor %}
     <br>
     <p>Makanan yang dipesan:</p>
-    <li></li>
-    <li></li>
-    <p>Total Harga Makanan: </p>
-    <p>Total Diskon: </p>
-    <p>Biaya Pengantaran: </p>
-    <p>Total Biaya: </p>
-    <p>Jenis Pembayaran: </p>
+    {% for res in query3 %}
+    <li>{{ res.foodname }}({{ res.amount }}) {%if res.note is not None%} -{{ res.note }}{% endif %}</li>
+    {% endfor %}
+    {% for res in query1 %}
+    <p>Total Harga Makanan: {{ res.totalfood }}</p>
+    <p>Total Diskon: {{ res.totalfood }}</p>
+    <p>Biaya Pengantaran: {{ res.deliveryfee }}</p>
+    <p>Total Biaya: {{ res.totalfood }}</p>
+    <p>Jenis Pembayaran: {{ res.name }}</p>
+    {% endfor %}
     <br>
-    <p>Status Pembayaran: </p>
-    <p>Status Pesanan: </p>
+    {% for res in query4 %}
+    <p>Status Pembayaran: {{ res.name }}</p>
+    {%endfor%}
+    {% for res in query6 %}
+    <p>Status Pesanan: {{ res.name }}</p>
+    {%endfor%}
     <br>
+    {% for res in query5 %}
     <p>Kurir: </p>
-    <p>Plat Kendaraan: </p>
-    <p>Jenis Kendaraan: </p>
-    <p>Merk Kendaraan: </p>
+    <p>Plat Kendaraan: {{ res.platenum }}</p>
+    <p>Jenis Kendaraan: {{ res.vehicletype}}</p>
+    <p>Merk Kendaraan: {{ res.vehiclebrand }}</p>
+    {%endfor%}
     <div align="center">  
       <a href="/read-transaksi-kurir">Kembali</a>
   </div>
