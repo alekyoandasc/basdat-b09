@@ -34,7 +34,7 @@
         {% else %}
         <p>Total Diskon : -</p>
 {% endif %}
-<p>Biaya Pengantaran : </p>
+<p>Biaya Pengantaran : {{total_pengantaran}}</p>
 <p>Total Biaya : {{total_biaya}}</p>
 <br>
 <a href="{% url 'show_konfirmasi_pesanan' %}">Konfirmasi Pembayaran</a>

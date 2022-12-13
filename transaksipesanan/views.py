@@ -9,8 +9,8 @@ def show_pengisian_alamat(request):
     print(request.COOKIES)
     if request.COOKIES['user_type'] == 'customer':
         with connection.cursor() as cur:
-            cur.execute('SET SEARCH_PATH to sirest')
-            cur.execute('SELECT DISTINCT province FROM delivery_fee_per_km')
+            # cur.execute('SET SEARCH_PATH to sirest')
+            cur.execute('SELECT DISTINCT province FROM sirest.delivery_fee_per_km')
 
             province = cur.fetchall()
             print(f'ini province {province[0][0]}')
@@ -49,10 +49,10 @@ def show_pemilihan_restoran(request):
             data_provinsi = request.session.get('data_provinsi')
             print(data_provinsi)
             
-            print(f"select * from restaurant r left outer join (select * from restaurant_promo rp where current_date >= start and current_date <= endpromo) \
+            print(f"select * from sirest.restaurant r left outer join (select * from sirest.restaurant_promo rp where current_date >= start and current_date <= endpromo) \
                 as rp on r.rname = rp.rname and r.rbranch=rp.rbranch where r.province='{data_provinsi}'")
-            cur.execute('SET SEARCH_PATH to sirest')
-            cur.execute(f"select * from restaurant r left outer join (select * from restaurant_promo rp where current_date >= start and current_date <= endpromo) \
+            # cur.execute('SET SEARCH_PATH to sirest')
+            cur.execute(f"select * from sirest.restaurant r left outer join (select * from sirest.restaurant_promo rp where current_date >= start and current_date <= endpromo) \
                 as rp on r.rname = rp.rname and r.rbranch=rp.rbranch where r.province='{data_provinsi}'")
 
             # cur.execute(f"SELECT * FROM restaurant_promo where rname='{rname}' and rbranch='{rbranch}' and current_date >= start and current_date <= endpromo")
@@ -77,8 +77,8 @@ def show_pemilihan_makanan(request, rname, rbranch):
         with connection.cursor() as cur:
             request.session['rname'] = str(rname)
             request.session['rbranch'] = str(rbranch)
-            cur.execute('SET SEARCH_PATH to sirest')
-            cur.execute(f"SELECT foodname, price FROM food WHERE rname='{rname}' AND rbranch='{rbranch}'")
+            # cur.execute('SET SEARCH_PATH to sirest')
+            cur.execute(f"SELECT foodname, price FROM sirest.food WHERE rname='{rname}' AND rbranch='{rbranch}'")
 
             makanan_data = cur.fetchall()
             request.session['makanan_data'] = makanan_data
@@ -86,7 +86,7 @@ def show_pemilihan_makanan(request, rname, rbranch):
             
 
 
-            cur.execute("SELECT * FROM payment_method")
+            cur.execute("SELECT * FROM sirest.payment_method")
 
             metode_pembayaran_data = cur.fetchall()
 
@@ -140,13 +140,21 @@ def show_daftar_pesanan(request):
     if request.COOKIES['user_type'] == 'customer':
         rname = request.session.get('rname')
         rbranch = request.session.get('rbranch')
+        data_provinsi = request.session.get('data_provinsi')
         with connection.cursor() as cur:
-            cur.execute("SET SEARCH_PATH TO SIREST")
-            cur.execute(f"SELECT * FROM restaurant_promo, promo where restaurant_promo.pid = promo.id and rname='{rname}' and rbranch='{rbranch}' and current_date >= start and current_date <= endpromo")
+            # cur.execute("SET SEARCH_PATH TO SIREST")
+            cur.execute(f"SELECT * FROM sirest.restaurant_promo, sirest.promo where restaurant_promo.pid = promo.id and rname='{rname}' and rbranch='{rbranch}' and current_date >= start and current_date <= endpromo")
 
             data_promo = cur.fetchone()
             request.session['data_promo'] = data_promo
             print(data_promo)
+
+            cur.execute(f"SELECT * FROM sirest.DELIVERY_FEE_PER_KM where province='{data_provinsi}'")
+
+            data_delivery = cur.fetchone()
+
+            # print(data_delivery)
+            # request.session['data_delivery'] = data_delivery
 
 
         daftar_pesanan = request.session.get('daftar_pesanan')
@@ -154,19 +162,29 @@ def show_daftar_pesanan(request):
         metode_pengantaran = request.session.get('pengantaran')
         metode_pembayaran = request.session.get('pembayaran')
 
+        print(daftar_pesanan)
+
+        if metode_pengantaran == 'Motor':
+            total_pengantaran = data_delivery[2]
+        elif metode_pengantaran == 'Mobil':
+            total_pengantaran = data_delivery[3]
+
         if data_promo:
             total_diskon = total_harga_pesanan * (data_promo[-1] / 100)
-            total_biaya = total_harga_pesanan - total_diskon
+            total_biaya = total_harga_pesanan - total_diskon + total_pengantaran
         else:
-            total_diskon = None
-            total_biaya = total_harga_pesanan
+            total_diskon = 0
+            total_biaya = total_harga_pesanan + total_pengantaran
 
+
+        request.session['total_pengantaran'] = total_pengantaran
         request.session['total_diskon'] = total_diskon
         request.session['total_biaya'] = total_biaya
 
         context = {
             'total_diskon' : total_diskon,
             'total_biaya' : total_biaya,
+            'total_pengantaran' : total_pengantaran,
             'daftar_pesanan' : daftar_pesanan,
             'total_harga_pesanan' : total_harga_pesanan,
             'metode_pengantaran' : metode_pengantaran,
@@ -199,8 +217,8 @@ def show_konfirmasi_pesanan(request):
         user_name = request.COOKIES['user_name']
 
         with connection.cursor() as cur:
-            cur.execute('SET SEARCH_PATH to sirest')
-            cur.execute(f"SELECT * FROM restaurant where rname = '{nama_restoran}' AND rbranch = '{nama_branch}'")
+            # cur.execute('SET SEARCH_PATH to sirest')
+            cur.execute(f"SELECT * FROM sirest.restaurant where rname = '{nama_restoran}' AND rbranch = '{nama_branch}'")
 
             data_restoran = cur.fetchall()
             jalan_restoran = data_restoran[0][4]
@@ -235,6 +253,7 @@ def show_konfirmasi_pesanan(request):
 
 def show_ringkasan_pesanan(request):
     if request.COOKIES['user_type'] == 'customer':
+        user_email = request.COOKIES['user_email']
         time_pesanan = request.session.get('time_pesanan')
         data_jalan = request.session.get('data_jalan')
         data_kecamatan = request.session.get('data_kecamatan')
@@ -248,12 +267,13 @@ def show_ringkasan_pesanan(request):
         metode_pembayaran = request.session.get('pembayaran')
         total_diskon = request.session.get('total_diskon')
         total_biaya = request.session.get('total_biaya')
+        total_pengantaran = request.session.get('total_pengantaran')
         
         print('time pesanan : ')
         print(time_pesanan)
         with connection.cursor() as cur:
-            cur.execute('SET SEARCH_PATH to sirest')
-            cur.execute(f"SELECT * FROM restaurant where rname = '{nama_restoran}' AND rbranch = '{nama_branch}'")
+            # cur.execute('SET SEARCH_PATH to sirest')
+            cur.execute(f"SELECT * FROM sirest.restaurant where rname = '{nama_restoran}' AND rbranch = '{nama_branch}'")
 
             data_restoran = cur.fetchall()
             jalan_restoran = data_restoran[0][4]
@@ -262,11 +282,12 @@ def show_ringkasan_pesanan(request):
             provinsi_restoran = data_restoran[0][7]
             
             # Insert into transaction
-            cur.execute(f"INSERT into TRANSACTION values('dowttrim4@microsoft.com', TIMESTAMP '2022-12-13 12:19:43.954205', 'Jalan', \
-                'Kec', 'Kota', 'Jawa Barat', 50000, 10000, 4000, 0, 4, 'PM2', 'PS2', 'DF02', 'jzinckep@yolasite.com');")
+            cur.execute(f"INSERT into sirest.TRANSACTION values('{user_email}', TIMESTAMP '{time_pesanan}', '{data_jalan}', \
+                '{data_kecamatan}', '{data_kota}', '{data_kota}', {total_harga_pesanan}, {total_diskon}, {total_pengantaran}, {total_biaya + total_pengantaran}, 4, 'PM2', 'PS2', 'DF02', 'jzinckep@yolasite.com');")
 
-            # for pesanan in daftar_pesanan:
-                # cur.execute(f"")
+            # Insert into transaction_food
+            for pesanan in daftar_pesanan:
+                cur.execute(f"INSERT into sirest.TRANSACTION_FOOD values('{user_email}', TIMESTAMP '{time_pesanan}', '{nama_restoran}', '{nama_branch}', '{pesanan[0]}', '{pesanan[1]}', '{pesanan[-1]}')")
             
         user_name = request.COOKIES['user_name']
 
@@ -288,6 +309,7 @@ def show_ringkasan_pesanan(request):
             'provinsi_restoran' : provinsi_restoran,
             'total_diskon' : total_diskon,
             'total_biaya' : total_biaya,
+            'total_pengantaran' : total_pengantaran,
         }
 
 
