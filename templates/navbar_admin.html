@@ -40,7 +40,7 @@
         <li><a class="dropdown-item" href="{% url 'riwayat_dan_promo:buat_promo' %}">Buat Promo</a></li>
       </ul>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown ">
       <a
         class="nav-link dropdown-toggle me-3 ms-3 mr-1"
         href="#"
@@ -52,23 +52,23 @@
         Pesanan
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:read'%}">Tarif Pengiriman</a></li>
-        <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:create'%}">Buat Tarif Pengiriman</a></li>
+        <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:read' %}">Daftar Tarif Pengiriman Per KM</a></li>
+        <li><a class="dropdown-item" href="{% url 'tarif_pengiriman_per_km:create' %}">Buat Tarif Pengiriman Per KM</a></li>
       </ul>
     </li>
- 
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle me-3 ms-3 mr-1"
-      href="#"
-      id="navbarDropdown"
-      role="button"
-      data-bs-toggle="dropdown"
-      aria-expanded="false">
+      <a
+        class="nav-link dropdown-toggle me-3 ms-3 mr-1"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
       [ADMIN] {{request.COOKIES.user_email}}
       </a>
-      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="{% url 'logout_pengguna' %}">Logout</a></li>
       </ul>
-      
     </li>
   </ul>

@@ -1,9 +1,21 @@
 from django.shortcuts import redirect, render
+from django.db import connection, transaction
 
 # Create your views here.
 def read_daftar_restoran(request):
     # TODO: Filter semua restoran
-    return render(request, "restoran/read_daftar_restoran.html")
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """SELECT RName FROM SIREST.RESTAURANT"""
+        )
+        fields = [field_name[0] for field_name in cursor.description]
+        rows = cursor.fetchall()
+        restaurants = [dict(zip(fields, row)) for row in rows]
+        print(restaurants)
+        context = {
+            "restaurants": restaurants,
+        }
+    return render(request, "restoran/read_daftar_restoran.html", context)
 
 def read_detail_restoran(request, rname, rbranch):
     # TODO: Filter restoran

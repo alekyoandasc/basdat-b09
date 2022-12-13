@@ -1,49 +1,40 @@
+{% extends 'base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 
-      <head>
-            <meta charset="UTF-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>RestoPay</title>
-      </head>
+{% load static %}
 
-      <body>
-            <nav class="navbar navbar-dark bg-info shadow-sm">
-                  <div class="container-fluid">
-                        <h2>SIREST-B09</h2>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                              <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <h4>RestoPay</h4>
-                  <table class="table-bordered table-success table-striped table-sm">
-                        <tr>
-                              <th>Saldo:</th>
-                        </tr>
+{% block content %}
+<head>
+      <meta charset="UTF-8" />
+      <title>Restopay</title>
+</head>
+<body>
+      <div class="container" style="padding: 50px">
+            <div class="row">
+                  <div class="my-auto d-flex justify-content-center mb-4" style="width:2000px;">
+                        <h3>Restopay</h3>
+                  </div>
+                  <br>
+                  {% for pay in query1 %}
+                  <div>
+                        Saldo: {{ pay.restopay }}
+                  </div>
+                  {% endfor %}
 
-                        {% for i in collections %}
-                        <tr>
-                              <td>{{i.saldo}}</td>
-                        </tr>
-                        {% endfor %}
-                  </table>
-                  <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                              <!-- <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'add_saldo' %}">ISI SALDO</a>
-                              </li> -->
-                              <h4 style="width: 90px;"></h4>
-                              <a href="/restopay/add-saldo" class="button">
-                                    <button type="button" class="btn btn-outline-warning">ISI SALDO</button>
-                              </a>
-                              <h4 style="width: 90px;"></h4>
-                              <a href="/restopay/tarik-saldo" class="button">
-                                    <button type="button" class="btn btn-outline-warning">TARIK SALDO</button>
-                              </a>
-                        </ul>
+                  <div class="mb-3">
+                        <h4 style="width: 90px;"></h4>
+                        <a href="/restopay/add-saldo">
+                              <center><button class="btn btn-primary">ISI SALDO</button></center>
+                        </a>
+                        <h4 style="width: 90px;"></h4>
+                        <a href="/restopay/tarik-saldo">
+                              <center><button class="btn btn-primary">TARIK SALDO</button></center>
+                        </a>
                   </div>
-                  </div>
-            </nav>
-      </body>
+            </div>
+      </div>
+</body>
 </html>
+{% endblock content %}
