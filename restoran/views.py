@@ -65,21 +65,72 @@ def read_detail_restoran(request):
 
 def read_menu_restoran(request):
     # TODO: Filter restoran
-    return render(request, "restoran/read_menu_restoran.html")
+    context = {}
+    if request.COOKIES['user_type'] != 'resto':
+        rname_get = request.GET.get("rname")
+        rbranch_get = request.GET.get("rbranch")
+    else:
+        email = request.COOKIES['user_email']
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f"""
+                SELECT DISTINCT RName, RBranch FROM SIREST.RESTAURANT
+                WHERE Email='{email}'
+                """
+            )
+            fields = [field_name[0] for field_name in cursor.description]
+            rows = cursor.fetchall()
+            rdetail = [dict(zip(fields, row)) for row in rows][0]
+            rname_get = rdetail["rname"]
+            rbranch_get = rdetail["rbranch"]
+
+    with connection.cursor() as cursor:
+        cursor.execute(
+            f"""
+            SELECT * FROM SIREST.FOOD F
+            JOIN SIREST.FOOD_CATEGORY FC
+            ON F.FCategory = FC.Id
+            WHERE F.RName='{rname_get}' AND F.RBranch='{rbranch_get}'
+            """
+        )
+        fields = [field_name[0] for field_name in cursor.description]
+        rows = cursor.fetchall()
+        foods = [dict(zip(fields, row)) for row in rows]
+        for i in range(len(foods)):
+            cursor.execute(
+                f"""
+                SELECT Name FROM SIREST.FOOD_INGREDIENT
+                JOIN SIREST.INGREDIENT ON Ingredient=Id
+                WHERE RName='{rname_get}' AND RBranch='{rbranch_get}' AND FoodName='{foods[i]["foodname"]}'
+                """
+            )
+            fields = [field_name[0] for field_name in cursor.description]
+            rows = cursor.fetchall()
+            ingredients = [dict(zip(fields, row)) for row in rows][0]["name"]
+
+            foods[i]["ingredients"] = ingredients
+        context = {
+            "rname": rname_get,
+            "rbranch": rbranch_get,
+            "foods": foods,
+            "role_user": request.COOKIES['user_type']
+        }
+
+    return render(request, "restoran/read_menu_restoran.html", context=context)
 
 def create_makanan(request, rname, rbranch):
     if request.method == "POST":
         # TODO: Filter restoran, validasi data dan simpan makanan
-        return redirect("restoran:read_menu_restoran", rname="kfc", rbranch="depok")
+        return redirect("restoran:read_menu_restoran")
     return render(request, "restoran/create_makanan.html")
 
-def update_makanan(request, rname, rbranch, fname):
+def update_makanan(request):
     if request.method == "POST":
         # TODO: Filter makanan, validasi data dan simpan makanan
-        return redirect("restoran:read_menu_restoran", rname="kfc", rbranch="depok")
+        return redirect("restoran:read_menu_restoran")
     return render(request, "restoran/update_makanan.html")
 
-def delete_makanan(request, rname, rbranch, fname):
+def delete_makanan(request):
     # TODO: Filter dan delete makanan
     if request.method == "POST":
-        return redirect("restoran:read_menu_restoran", rname="kfc", rbranch="depok")
+        return redirect("restoran:read_menu_restoran")

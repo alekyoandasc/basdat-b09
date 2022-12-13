@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container">
-    <h3 class="text-center mb-3">DAFTAR MENU RESTORAN [KFC - Depok]</h3>
+    <h3 class="text-center mb-3">DAFTAR MENU RESTORAN [{{ rname }} - {{ rbranch }}]</h3>
     <table class="table table-striped table-hover">
         <thead>
           <tr>
@@ -17,70 +17,44 @@
             <th scope="col">Harga</th>
             <th scope="col">Kategori Makanan</th>
             <th scope="col">Bahan Makanan</th>
-            {% comment %} {% if request.user.role == "restoran" %} {% endcomment %}
-            <th scope="col">Aksi</th>
-            {% comment %} {% endif %} {% endcomment %}
+            {% if role_user == "resto" %}
+              <th scope="col">Aksi</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
+          {% for food in foods %}
           <tr>
-            <th scope="row">1</th>
-            <td>Roti Bakar Coklat Keju</td>
-            <td>Roti dengan isian coklat dan keju yang dibakar</td>
-            <td>10</td>
-            <td>8000</td>
-            <td>Snack</td>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ food.foodname }}</td>
+            <td>{{ food.description }}</td>
+            <td>{{ food.stock }}</td>
+            <td>{{ food.price }}</td>
+            <td>{{ food.name }}</td>
             <td>
-                {% comment %} {% for ingredient in ingredients %}
-                    ingredient 
-                {% endfor %} {% endcomment %}
-                Roti, Mentega, Coklat, Keju
+                {{ food.ingredients }}
             </td>
-            {% comment %} {% if request.user.role == "restoran" %} {% endcomment %}
-            <td>
-                <div class='d-flex h-100 flex-column justify-content-center align-items-start'>
-                    {% comment %} Parameter kedua diganti, yaitu "1" diganti item.pk {% endcomment %}
-                    <a href="{% url 'restoran:update_makanan' rname='mcdonald' rbranch='depok' fname='roti-bakar-coklat-keju' %}"><button class="btn-xs btn-success mb-1">Ubah</button></a>
-                    <form action="{% url 'restoran:delete_makanan' rname='mcdonald' rbranch='depok' fname='roti-bakar-coklat-keju' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-xs btn-danger">Hapus</button></a>
+            {% if role_user == "resto" %}
+              <td>
+                  <div class='d-flex h-100 flex-column justify-content-center align-items-start'>
+                      {% comment %} Parameter kedua diganti, yaitu "1" diganti item.pk {% endcomment %}
+                      <form action="{% url 'restoran:update_makanan' %}" method="get">
+                        <input type="hidden" name="rname" value="{{ food.rname }}">
+                        <input type="hidden" name="rbranch" value="{{ food.rbranch }}">
+                        <input type="hidden" name="foodname" value="{{ food.foodname }}">
+                        <button type="submit" class="btn-xs btn-primary mb-1">Ubah</button></a>
                     </form>
-            </td>
-            {% comment %} {% endif %} {% endcomment %}
+                    <form action="{% url 'restoran:delete_makanan' %}" method="get">
+                      <input type="hidden" name="rname" value="{{ food.rname }}">
+                      <input type="hidden" name="rbranch" value="{{ food.rbranch }}">
+                      <input type="hidden" name="foodname" value="{{ food.foodname }}">
+                      <button type="submit" class="btn-xs btn-danger mb-1">Hapus</button></a>
+                  </form>
+              </td>
+            {% endif %}
           </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Milkshake Vanilla</td>
-            <td>Milkshake rasa vanilla dengan topping es krim</td>
-            <td>5</td>
-            <td>7000</td>
-            <td>Minuman</td>
-            <td>
-                {% comment %} {% for ingredient in ingredients %}
-                    ingredient 
-                {% endfor %} {% endcomment %}
-                Susu, Es Krim, Gula
-            </td>
-            {% comment %} {% if request.user.role == "restoran" %} {% endcomment %}
-            <td>
-                <div class='d-flex h-100 flex-column justify-content-center align-items-start'>
-                    {% comment %} Parameter kedua diganti, yaitu "1" diganti item.pk {% endcomment %}
-                    <a href="{% url 'restoran:update_makanan' rname='kfc' rbranch='depok' fname='roti-bakar-coklat-keju' %}"><button class="btn-xs btn-success mb-1">Ubah</button></a>
-                    <form action="{% url 'restoran:delete_makanan' rname='kfc' rbranch='depok' fname='roti-bakar-coklat-keju' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-xs btn-danger">Hapus</button></a>
-                    </form>
-            </td>
-            {% comment %} {% endif %} {% endcomment %}
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
-      {% comment %} {% if request.user.role == "restoran" %} {% endcomment %}
-      <div class="d-flex justify-content-center">
-        <a href="{% url 'restoran:create_makanan' rname='kfc' rbranch='depok' %}" class="btn btn-primary">Buat Menu Baru</a>
-      </div>
-      {% comment %} {% endif %} {% endcomment %}
-      
-      
 </div>
 {% endblock content %}
