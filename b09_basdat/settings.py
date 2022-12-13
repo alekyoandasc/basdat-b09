@@ -97,12 +97,12 @@ if PRODUCTION:
     PGPORT = os.getenv('PGPORT')
 else:
     # nama database di wsl
-    PGDATABASE = 'localb09'
+    PGDATABASE = 'railway'
     PGUSER = 'postgres'
     # password user postgres di wsl
-    PGPASSWORD = 'Adrian2710#'
-    PGHOST = '127.0.0.1'
-    PGPORT = '5432'
+    PGPASSWORD = 'K4AVMGV2sFkIyQIop39z'
+    PGHOST = 'containers-us-west-53.railway.app'
+    PGPORT = '6086'
 
 DATABASES = {
     # 'default': {
