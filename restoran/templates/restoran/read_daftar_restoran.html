@@ -7,9 +7,7 @@
 {% block content %}
 <div class="container">
     <h3 class="text-center mb-3">DAFTAR RESTORAN</h3>
-    {% for each_restoran in restaurants %}
-      {{ each_restoran.rname }}
-    {% endfor %}
+    
     <table class="table table-striped table-hover">
         <thead>
           <tr>
@@ -20,34 +18,27 @@
           </tr>
         </thead>
         <tbody>
+          {% for restaurant in restaurants %}
           <tr>
-            <th scope="row">1</th>
-            <td>McDonald’s Depok</td>
-            <td>4.7</td>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ restaurant.rname }} - {{ restaurant.rbranch }}</td>
+            <td>{{ restaurant.rating }}</td>
             <td>
                 <div class='d-flex flex-column justify-content-center align-items-start'>
                     {% comment %} Parameter kedua diganti, yaitu "1" diganti item.pk {% endcomment %}
-                    <a href="{% url 'restoran:read_detail_restoran' rname='mcdonald' rbranch='depok' %}"><button class="btn-xs btn-primary mb-1">Detail</button></a>
-                    <form action="{% url 'restoran:read_menu_restoran' rname='mcdonald' rbranch='depok' %}" method="post">
-                        {% csrf_token %}
+                  <form action="{% url 'restoran:read_detail_restoran' %}" method="get">
+                      <input type="hidden" name="rname" value="{{ restaurant.rname }}">
+                      <input type="hidden" name="rbranch" value="{{ restaurant.rbranch }}">
+                      <button type="submit" class="btn-xs btn-primary">Detail</button></a>
+                  </form>
+                    <form action="{% url 'restoran:read_menu_restoran' %}" method="get">
+                      <input type="hidden" name="rname" value="{{ restaurant.rname }}">
+                      <input type="hidden" name="rbranch" value="{{ restaurant.rbranch }}">
                         <button type="submit" class="btn-xs btn-primary">Menu</button></a>
                     </form>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>KFC Depok</td>
-            <td>4.3</td>
-            <td>
-                <div class='d-flex flex-column justify-content-center align-items-start'>
-                    {% comment %} Parameter kedua diganti, yaitu "1" diganti item.pk {% endcomment %}
-                    <a href="{% url 'restoran:read_detail_restoran' rname='kfc' rbranch='depok' %}"><button class="btn-xs btn-primary mb-1">Detail</button></a>
-                    <form action="{% url 'restoran:read_menu_restoran' rname='kfc' rbranch='depok' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-xs btn-primary">Menu</button></a>
-                    </form>
-            </td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
 </div>
