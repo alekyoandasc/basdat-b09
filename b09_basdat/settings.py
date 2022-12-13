@@ -126,7 +126,7 @@ DATABASES = {
     #     'NAME': 'tk4',
     #     'USER': 'postgres',
     #     # password postgres kalian masing2
-    #     'PASSWORD': 'pass',
+    #     'PASSWORD': 'Zakirobinale123',
     #     'HOST': '127.0.0.1',
     #     'PORT': '5432',
     # }

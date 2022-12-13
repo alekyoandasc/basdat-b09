@@ -16,14 +16,19 @@
     <th>Aksi</th>
 </tr>
 {% for res in result %}
+{% if res.id != "TS4" %}
   <tr>
     <td align="center">{{ forloop.counter }}</td>
-    <td align="center">{{ res.a }}</td>
-    <td align="center">{{ res.b }}</td>
-    <td align="center">{{ res.a }}</td>
-    <td align="center">{{ res.b }}</td>
-    <td><a href="">Selesai</a><br><a href="">Detail</a></td>
+    <td align="center">{{ res.rname }} {{ res.rbranch }}</td>
+    <td align="center">{{ res.fname }} {{ res.lname }}</td>
+    <td align="center">{{ res.datetime }}</td>
+    <td align="center">{{ res.name }}</td>
+    <td>{% if res.id == "TS3"%}<a href="{% url 'update_transaksi_kurir' email=res.email datetime=res.datetime %}">Selesai</a>{% endif %}
+    <br>
+    <a href="{% url 'read_detail_transaksi_kurir' email=res.email datetime=res.datetime %}">Detail</a></td>
   </tr>
+  {% endif %}
 {% endfor %}
 </table>
+<br>
 {% endblock content %}

@@ -181,6 +181,7 @@ def login_pengguna(request):
                         row = cursor.fetchone()
                         if row is not None:
                               response.set_cookie('user_type', 'courier')
+                              response.set_cookie('email', email)
                         return response
                   else:
                         messages.info(request, 'Email atau password tidak valid')

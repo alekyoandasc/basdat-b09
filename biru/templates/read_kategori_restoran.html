@@ -12,12 +12,15 @@
     <th>Kategori Restoran</th>
     <th>Aksi</th>
 </tr>
-{% for res in result %}
+{% for res in query1 %}
   <tr>
     <td align="center">{{ forloop.counter }}</td>
-    <td align="center">{{ res }}</td>
-    <td><a href="/kategori-resto/delete/{{ res }}">Hapus</a></td>
+    <td align="center">{{ res.name }}</td>
+    {% if res.id in query2 %}
+    <td><a href="/kategori-resto/delete/{{ res.id }}">Hapus</a></td>
+    {% endif %}
   </tr>
 {% endfor %}
 </table>
+<br>
 {% endblock content %}

@@ -12,4 +12,6 @@ urlpatterns = [
     path('ringkasan_pesanan', show_ringkasan_pesanan, name='show_ringkasan_pesanan'),
     path('post_pengisian_alamat', post_pengisian_alamat, name='post_pengisian_alamat'),
     path('post_pemilihan_makanan', post_pemilihan_makanan, name='post_pemilihan_makanan'),
+    path('cek_pemilihan_makanan/', show_cek_pesanan_berlangsung, name='show_cek_pesanan_berlangsung'),
+    path('pesanan_berlangsung/<datetime>', show_pesanan, name='show_pesanan'),
 ]
