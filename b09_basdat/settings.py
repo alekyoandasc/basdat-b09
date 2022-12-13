@@ -109,27 +109,27 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
 
-    
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': PGDATABASE,
-        'USER': PGUSER,
-        'PASSWORD': PGPASSWORD,
-        'HOST': PGHOST,
-        'PORT': PGPORT,
-    },
-    
-    # Untuk build
+
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     # nama database di wsl biasanya default postgres
-    #     'NAME': 'tk4',
-    #     'USER': 'postgres',
-    #     # password postgres kalian masing2
-    #     'PASSWORD': 'pass',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
-    # }
+    #     'NAME': PGDATABASE,
+    #     'USER': PGUSER,
+    #     'PASSWORD': PGPASSWORD,
+    #     'HOST': PGHOST,
+    #     'PORT': PGPORT,
+    # },
+    
+    # Untuk build
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # nama database di wsl biasanya default postgres
+        'NAME': 'tk4',
+        'USER': 'postgres',
+        # password postgres kalian masing2
+        'PASSWORD': 'Zakirobinale123',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
 if PRODUCTION:

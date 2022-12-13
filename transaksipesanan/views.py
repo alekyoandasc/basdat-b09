@@ -283,11 +283,13 @@ def show_ringkasan_pesanan(request):
             
             # Insert into transaction
             cur.execute(f"INSERT into sirest.TRANSACTION values('{user_email}', TIMESTAMP '{time_pesanan}', '{data_jalan}', \
-                '{data_kecamatan}', '{data_kota}', '{data_kota}', {total_harga_pesanan}, {total_diskon}, {total_pengantaran}, {total_biaya + total_pengantaran}, 4, 'PM2', 'PS2', 'DF02', 'jzinckep@yolasite.com');")
+                '{data_kecamatan}', '{data_kota}', '{data_provinsi}', {total_harga_pesanan}, {total_diskon}, {total_pengantaran}, {total_biaya + total_pengantaran}, 4, 'PM2', 'PS2', 'DF02', 'jzinckep@yolasite.com');")
 
             # Insert into transaction_food
             for pesanan in daftar_pesanan:
                 cur.execute(f"INSERT into sirest.TRANSACTION_FOOD values('{user_email}', TIMESTAMP '{time_pesanan}', '{nama_restoran}', '{nama_branch}', '{pesanan[0]}', '{pesanan[1]}', '{pesanan[-1]}')")
+
+            cur.execute(f"INSERT into sirest.TRANSACTION_HISTORY values('{user_email}', TIMESTAMP '{time_pesanan}', 'TS1', TIMESTAMP '{time_pesanan}')")
             
         user_name = request.COOKIES['user_name']
 
@@ -314,5 +316,97 @@ def show_ringkasan_pesanan(request):
 
 
         return render(request, 'ringkasan_pesanan.html', context)
+
+    return redirect('/')
+
+def show_cek_pesanan_berlangsung(request):
+    if request.COOKIES['user_type'] == 'customer':
+        user_email = request.COOKIES['user_email']
+
+        with connection.cursor() as cur:
+            cur.execute(f"SELECT * FROM sirest.transaction t, sirest.transaction_history th WHERE t.email = '{user_email}' \
+                and t.datetime=th.datetime;")
+
+            pesanan_data = cur.fetchall()
+
+            print(pesanan_data)
+
+            # time_pesanan = pesanan_data[0][1]
+
+            # cur.execute(f"SELECT * FROM TRANSACTION_FOOD WHERE datetime=TIMESTAMP'{time_pesanan}'")
+
+            # rdata = cur.fetchone()
+            
+
+
+        context = {
+            'pesanan_data' : pesanan_data
+        }
+        return render(request, 'cek_pesanan_berlangsung.html', context)
+
+    return redirect('/')
+
+def show_pesanan(request, datetime):
+    if request.COOKIES['user_type'] == 'customer':
+
+        with connection.cursor() as cur:
+            cur.execute(f"SELECT * FROM sirest.transaction t, sirest.transaction_history th WHERE t.email=th.email and t.datetime= TIMESTAMP'{datetime}'")
+
+            data_pesanan_berlangsung = cur.fetchone()
+            print(data_pesanan_berlangsung)
+
+            cur.execute(f"SELECT * FROM sirest.transaction t, sirest.transaction_food tf WHERE t.email = tf.email and tf.datetime= TIMESTAMP'{datetime}'")
+
+            data_makanan = cur.fetchall()
+            rname = data_makanan[0][17]
+            rbranch = data_makanan[0][18]
+            print(data_makanan)
+
+            cur.execute(f"SELECT street, district, city, province FROM sirest.restaurant WHERE rname='{rname}' and rbranch='{rbranch}'")
+            data_restoran = cur.fetchone()
+            jalan_restoran = data_restoran[0]
+            kecamatan_restoran = data_restoran[1]
+            kota_restoran = data_restoran[2]
+            provinsi_restoran = data_restoran[3]
+
+            cur.execute(f"SELECT foodname, note FROM sirest.TRANSACTION_FOOD WHERE datetime = TIMESTAMP '{datetime}'")
+
+            daftar_pesanan = cur.fetchall()
+            
+
+        user_name = request.COOKIES['user_name']
+        data_jalan = data_pesanan_berlangsung[2]
+        data_kecamatan = data_pesanan_berlangsung[3]
+        data_kota = data_pesanan_berlangsung[4]
+        data_provinsi = data_pesanan_berlangsung[5]
+
+        total_harga_pesanan = data_pesanan_berlangsung[5]
+        total_diskon = data_pesanan_berlangsung[7]
+        total_pengantaran = data_pesanan_berlangsung[6]
+        total_biaya = data_pesanan_berlangsung[9]
+        metode_pembayaran = data_pesanan_berlangsung[11]
+
+        context = {
+            'user_name': user_name,
+            'data_jalan' : data_jalan,
+            'data_kecamatan' : data_kecamatan,
+            'data_kota' : data_kota,
+            'data_provinsi' : data_provinsi,
+            'rname' : rname,
+            'rbranch' : rbranch,
+            'total_harga_pesanan' : total_harga_pesanan,
+            'total_diskon' : total_diskon,
+            'total_pengantaran' : total_pengantaran,
+            'total_biaya' : total_biaya,
+            'metode_pembayaran' : metode_pembayaran,
+            'data_pesanan_berlangsung' : data_pesanan_berlangsung,
+            'jalan_restoran' : jalan_restoran,
+            'kecamatan_restoran' : kecamatan_restoran,
+            'kota_restoran' : kota_restoran,
+            'provinsi_restoran' : provinsi_restoran,
+            'daftar_pesanan' : daftar_pesanan,
+        }
+
+        return render(request, 'pesanan_berlangsung.html', context)
 
     return redirect('/')
