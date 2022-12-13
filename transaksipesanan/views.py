@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db import connection
+from django.http import HttpResponse
 import datetime
 import psycopg2
 
@@ -9,7 +10,6 @@ def show_pengisian_alamat(request):
     print(request.COOKIES)
     if request.COOKIES['user_type'] == 'customer':
         with connection.cursor() as cur:
-            # cur.execute('SET SEARCH_PATH to sirest')
             cur.execute('SELECT DISTINCT province FROM sirest.delivery_fee_per_km')
 
             province = cur.fetchall()
@@ -45,20 +45,13 @@ def post_pengisian_alamat(request):
 def show_pemilihan_restoran(request):
     if request.COOKIES['user_type'] == 'customer':
         with connection.cursor() as cur:
-            # print(request.session.get('data_provinsi'))
             data_provinsi = request.session.get('data_provinsi')
-            print(data_provinsi)
-            
-            print(f"select * from sirest.restaurant r left outer join (select * from sirest.restaurant_promo rp where current_date >= start and current_date <= endpromo) \
-                as rp on r.rname = rp.rname and r.rbranch=rp.rbranch where r.province='{data_provinsi}'")
-            # cur.execute('SET SEARCH_PATH to sirest')
+
             cur.execute(f"select * from sirest.restaurant r left outer join (select * from sirest.restaurant_promo rp where current_date >= start and current_date <= endpromo) \
                 as rp on r.rname = rp.rname and r.rbranch=rp.rbranch where r.province='{data_provinsi}'")
 
-            # cur.execute(f"SELECT * FROM restaurant_promo where rname='{rname}' and rbranch='{rbranch}' and current_date >= start and current_date <= endpromo")
 
             restaurant_data = cur.fetchall()
-            print(restaurant_data)
 
             context = {
                 'restaurant_data' : restaurant_data
@@ -217,7 +210,6 @@ def show_konfirmasi_pesanan(request):
         user_name = request.COOKIES['user_name']
 
         with connection.cursor() as cur:
-            # cur.execute('SET SEARCH_PATH to sirest')
             cur.execute(f"SELECT * FROM sirest.restaurant where rname = '{nama_restoran}' AND rbranch = '{nama_branch}'")
 
             data_restoran = cur.fetchall()
@@ -272,7 +264,6 @@ def show_ringkasan_pesanan(request):
         print('time pesanan : ')
         print(time_pesanan)
         with connection.cursor() as cur:
-            # cur.execute('SET SEARCH_PATH to sirest')
             cur.execute(f"SELECT * FROM sirest.restaurant where rname = '{nama_restoran}' AND rbranch = '{nama_branch}'")
 
             data_restoran = cur.fetchall()
@@ -281,6 +272,13 @@ def show_ringkasan_pesanan(request):
             kota_restoran = data_restoran[0][6]
             provinsi_restoran = data_restoran[0][7]
             
+            # Update restopay (jika menggunakannya)
+            if metode_pembayaran == 'PM4':
+                try:
+                    cur.execute(f"UPDATE sirest.TRANSACTION_ACTOR set restopay = restopay - 1000 where email='{user_email}' ")
+                except:
+                    return HttpResponse('Restopay tidak cukup!')
+
             # Insert into transaction
             cur.execute(f"INSERT into sirest.TRANSACTION values('{user_email}', TIMESTAMP '{time_pesanan}', '{data_jalan}', \
                 '{data_kecamatan}', '{data_kota}', '{data_provinsi}', {total_harga_pesanan}, {total_diskon}, {total_pengantaran}, {total_biaya + total_pengantaran}, 4, 'PM2', 'PS2', 'DF02', 'jzinckep@yolasite.com');")
@@ -410,3 +408,4 @@ def show_pesanan(request, datetime):
         return render(request, 'pesanan_berlangsung.html', context)
 
     return redirect('/')
+    
