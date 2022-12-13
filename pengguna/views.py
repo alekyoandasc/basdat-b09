@@ -142,6 +142,8 @@ def login_pengguna(request):
                         response = HttpResponseRedirect(reverse("homepage"))
                         response.set_cookie('user_name', user['fname']+ " " + user['lname'])
                         response.set_cookie('user_email', user['email'])
+                        response.set_cookie('email', email)
+
 
                         cursor.execute(f"""
                               SELECT * 
