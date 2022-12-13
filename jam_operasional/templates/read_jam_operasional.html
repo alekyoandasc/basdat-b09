@@ -26,19 +26,19 @@
             <th>Aksi</th>
           </tr>
 
-          {% for jam in query1 %}
+          {% for row in transactions %}
           <tr>
             <td> {{ forloop.counter }} </td>
-            <td> {{ jam.day }} </td>
-            <td> {{ jam.starthours }} </td>
-            <td> {{ jam.endhours }} </td>
+            <td> {{ row.day }} </td>
+            <td> {{ row.starthours }} </td>
+            <td> {{ row.endhours }} </td>
             <td>
                 <div class="mb-3">
                   <a href='update'>
                         <button class="btn btn-outline-secondary">Ubah</button>
                   </a>
                   <br>
-                  <a href='#'>
+                  <a href='delete'>
                         <button class="btn btn-outline-secondary">Hapus</button>
                   </a>
             </div>

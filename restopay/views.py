@@ -33,11 +33,6 @@ def add_saldo(request):
 
       return render(request, 'isi_saldo.html', result)
 
-def validation_add_saldo(request):
-      data_saldo = {
-
-      }
-
 def tarik_saldo(request):
       result = {}
 
@@ -54,12 +49,3 @@ def tarik_saldo(request):
             result['query2'] = namedtuplefetchall(cursor)
 
       return render(request, 'tarik_saldo.html', result)
-
-# def validate_saldo(request):
-#       if request.session.get('role') == "":
-#             data_saldo = {
-#                   "saldonow" : request.POST.get("saldo"),
-#                   "nominalisi": request.POST.get("nominal"),
-#                   "bname": request.POST.get("bank_name"),
-#                   "norek": request.POST.get("no_rek")
-#             }

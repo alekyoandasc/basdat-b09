@@ -7,12 +7,12 @@
 <title>Buat Jam Operasional</title>
   <div class="container">
     <h3>FORM BUAT JAM OPERASIONAL</h3>
-    <form method="post" action="{% url 'read' %}">
+    <form method="post" action="{% url 'jam_operasional:create' %}">
         {% csrf_token %}
         
         <div class="input-group mb-3">
           <label class="input-group-text" for="hari">Hari: </label>
-          <select name='day' class="form-select" id="day">
+          <select name='hari' class="form-select" id="hari">
             <option value="">--Select--</option>
             <option value="1">Senin</option>
             <option value="2">Selasa</option>
@@ -25,11 +25,11 @@
         </div>
         <div class="form-group">
           <label for="jam_buka">Jam Buka: </label>
-          <input type="time" class="form-control" id="starttime" name="starttime" placeholder="Silakan isi jam buka" required>
+          <input type="time" class="form-control" id="jam_buka" name="jam_buka" placeholder="Silakan isi jam buka" required>
         </div>
         <div class="form-group">
-            <label for="jam_tutup">Jam Tutup </label>
-            <input type="time" class="form-control" id="endtime" name="endtime" placeholder="Silakan isi jam tutup" required>
+            <label for="jam_tutup">Jam Tutup: </label>
+            <input type="time" class="form-control" id="jam_tutup" name="jam_tutup" placeholder="Silakan isi jam tutup" required>
         </div>
         {% if message %}
         <div class="alert alert-danger" role="alert">
