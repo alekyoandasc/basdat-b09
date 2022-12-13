@@ -2,12 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User as DjangoUser
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-from django import forms
 from django.template import RequestContext
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.urls import reverse
-from sirest_b09.models import *
 from .forms import AdminForm, PelangganForm, RestoranForm, KurirForm
 from json import dumps
 
@@ -183,6 +181,7 @@ def login_pengguna(request):
                         row = cursor.fetchone()
                         if row is not None:
                               response.set_cookie('user_type', 'courier')
+                              response.set_cookie('email', email)
                         return response
                   else:
                         messages.info(request, 'Email atau password tidak valid')

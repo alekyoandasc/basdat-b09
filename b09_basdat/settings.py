@@ -96,10 +96,9 @@ if PRODUCTION:
     PGHOST = os.getenv('PGHOST')
     PGPORT = os.getenv('PGPORT')
 else:
-    # nama database di wsl
+    
     PGDATABASE = 'railway'
     PGUSER = 'postgres'
-    # password user postgres di wsl
     PGPASSWORD = 'K4AVMGV2sFkIyQIop39z'
     PGHOST = 'containers-us-west-53.railway.app'
     PGPORT = '6086'
@@ -119,8 +118,18 @@ DATABASES = {
         'HOST': PGHOST,
         'PORT': PGPORT,
     },
-
-
+    
+    # Untuk build
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     # nama database di wsl biasanya default postgres
+    #     'NAME': 'tk4',
+    #     'USER': 'postgres',
+    #     # password postgres kalian masing2
+    #     'PASSWORD': 'pass',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    # }
 }
 
 if PRODUCTION:
@@ -181,3 +190,5 @@ for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache" 

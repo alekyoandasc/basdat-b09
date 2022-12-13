@@ -1,6 +1,5 @@
 from django import forms
-from sirest_b09.models import Admin, Pelanggan, Restoran, Kurir
-from django.db import connection
+
 class AdminForm(forms.Form):
       
       email = forms.EmailField(
