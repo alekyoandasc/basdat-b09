@@ -15,7 +15,7 @@
     <div class="container"  style="padding: 50px">
       <div class="row">
         <div class="my-auto d-flex justify-content-center mb-4" style="width:2000px;">
-          <h1>DAFTAR JAM OPERASIONAL</h1>
+          <h3>DAFTAR JAM OPERASIONAL</h3>
         </div>
         <table class="table">
           <tr>
@@ -26,17 +26,18 @@
             <th>Aksi</th>
           </tr>
 
-          {% for jam_ope in hasil %}
+          {% for jam in query1 %}
           <tr>
-            <td> {{ jam_ope.no }} </td>
-            <td> {{ jam_ope.hari }} </td>
-            <td> {{ jam_ope.jam_buka }} </td>
-            <td> {{ jam_ope.jam_tutup }} </td>
+            <td> {{ forloop.counter }} </td>
+            <td> {{ jam.day }} </td>
+            <td> {{ jam.starthours }} </td>
+            <td> {{ jam.endhours }} </td>
             <td>
                 <div class="mb-3">
                   <a href='update'>
                         <button class="btn btn-outline-secondary">Ubah</button>
                   </a>
+                  <br>
                   <a href='#'>
                         <button class="btn btn-outline-secondary">Hapus</button>
                   </a>
@@ -48,7 +49,6 @@
         </table>
       </div>
     </div>
-    {% include 'footer.html' %}
   </body>
 </html>
 {% endblock content %}
