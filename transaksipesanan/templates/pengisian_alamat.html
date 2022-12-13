@@ -22,34 +22,45 @@
         <option value="{{provinsi.0}}">{{provinsi.0}}</option>
         {% endfor %}
     </select>
-    <input type="submit" class="btn btn-primary" id ="submitButton" value="Submit">
+    <input type="submit" class="btn btn-primary" id ="submitButton" value="Submit" disabled="true">
   </form>
 
   <script>
-    // $(document).ready(function(){
-    //   $("input").change(function(){
-    //     // if ($('input:text').val().length != 0) {
-    //     //       alert("ASUU");
-    //     // }
-    //     var inputs = $("#inputData");
-    //     alert($(inputs[0]).val().length);
-    //     var valid = true;
-    //     for (var i = 0; i < inputs.length; i++){
+    $(document).ready(function(){
+      $("input").change(function(){
+        // if ($('input:text').val().length != 0) {
+        //       alert("ASUU");
+        // }
+        // var inputs = $("#inputData");
+        // alert($(inputs[0]).val().length);
+        // var valid = true;
+        // for (var i = 0; i < inputs.length; i++){
           
-    //           console.log($(inputs[i]).val())
-    //             if ($(inputs[i]).val() == ''){
-    //                 valid = false;
-    //             }
-    //         }
+        //       console.log($(inputs[i]).val())
+        //         if ($(inputs[i]).val() == ''){
+        //             valid = false;
+        //         }
+        //     }
         
-    //     if (valid){
-    //       $('#submitButton').attr('disabled', true)
-    //     }
-    //     else{
-    //       $('#submitButton').attr('disabled', false)
-    //     }
-    //   });
-    // });
+        // if (valid){
+        //   $('#submitButton').attr('disabled', true)
+        // }
+        // else{
+        //   $('#submitButton').attr('disabled', false)
+        // }
+        let allAreFilled = false;
+        var jalan = $('#Jalan').val().length != 0;
+        var kecamatan = $('#Kecamatan').val().length != 0;
+        var kota = $('#Kota').val().length != 0;
+
+        if (jalan && kecamatan && kota){
+            $('#submitButton').attr('disabled', false)
+        }
+        else {
+          $('#submitButton').attr('disabled', true)
+        }
+      });
+    });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 {% endblock content %}
