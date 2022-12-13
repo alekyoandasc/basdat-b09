@@ -6,31 +6,33 @@
 
 {% block content %}
 <div class="container">
-    <h3 class="text-center mb-3">Detail Restoran: [KFC - Depok]</h3>
+    <h3 class="text-center mb-3">Detail Restoran: [{{ restaurant.rname }} - {{ restaurant.rbranch }}]</h3>
     <div class="d-flex justify-content-center">
         <div class="card" style="width: 30rem;">
             <div class="card-body">
-                <p class="card-text"><strong>Nama restoran:</strong> KFC</p>
-                <p class="card-text"><strong>Cabang:</strong> Depok</p>
-                <p class="card-text"><strong>Nomor telepon:</strong> 14741</p>
-                <p class="card-text"><strong>Jalan:</strong> Jl.Akses UI</p>
-                <p class="card-text"><strong>Kecamatan:</strong> Beji</p>
-                <p class="card-text"><strong>Kota:</strong> Depok</p>
-                <p class="card-text"><strong>Provinsi:</strong> Jawa Barat</p>
-                <p class="card-text"><strong>Rating:</strong> 4.3</p>
-                <p class="card-text"><strong>Kategori Restoran:</strong> Fast Food</p>
+                <p class="card-text"><strong>Nama restoran:</strong> {{ restaurant.rname }}</p>
+                <p class="card-text"><strong>Cabang:</strong> {{ restaurant.rbranch }}</p>
+                <p class="card-text"><strong>Nomor telepon:</strong> {{ restaurant.rphonenum }}</p>
+                <p class="card-text"><strong>Jalan:</strong> {{ restaurant.street }}</p>
+                <p class="card-text"><strong>Kecamatan:</strong> {{ restaurant.district }}</p>
+                <p class="card-text"><strong>Kota:</strong> {{ restaurant.city }}</p>
+                <p class="card-text"><strong>Provinsi:</strong> {{ restaurant.province }}</p>
+                <p class="card-text"><strong>Rating:</strong> {{ restaurant.rating }}</p>
+                <p class="card-text"><strong>Kategori Restoran:</strong> {{ restaurant.name }}</p>
                 <div>
                     <span class="card-text"><strong>Jam Operasional:</strong></span>
                     <ul>
-                        <li>Senin - Jumat, 08.00 - 21.00</li>
-                        <li>Sabtu - Minggu, 08.00 - 23.00</li>
+                        {% for op_hour in restaurant.operating_hours %}
+                        <li>{{ op_hour.day }}, {{ op_hour.starthours }} - {{ op_hour.endhours }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div>
                     <span class="card-text"><strong>Promo berlangsung:</strong></span>
                     <ul>
-                        <li>Promo hari kemerdekaan</li>
-                        <li>Promo 11.11</li>
+                        {% for promo in restaurant.promos %}
+                        <li>{{ promo.promoname }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
                 
