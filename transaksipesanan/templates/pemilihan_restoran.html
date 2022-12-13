@@ -19,7 +19,11 @@
     <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{restoran.0}} - {{restoran.1}}</td>
+        {% if restoran.12 != None %}
+        <td>{{restoran.12}}</td>
+        {% else %}
         <td>-</td>
+        {% endif %}
         <td><form action="{% url 'show_pemilihan_makanan' restoran.0 restoran.1 %}" method="post">
             {% csrf_token %}
             <input class="btn btn-primary" type="submit" value="[Pilih]">

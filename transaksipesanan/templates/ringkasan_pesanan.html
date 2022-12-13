@@ -9,7 +9,7 @@
 <h2>Ringkasan Pesanan</h2>
 <br>
 
-<p>Nama Pelanggan : </p>
+<p>Nama Pelanggan : {{user_name}}</p>
 <p>Jalan : {{data_jalan}}</p>
 <p>Kecamatan : {{data_kecamatan}}</p>
 <p>Kota : {{data_kota}}</p>
@@ -30,10 +30,14 @@
 
 <br>
 <p>Total Harga Makanan : {{total_harga_pesanan}}</p>
-<p>Total Diskon : </p>
+{% if total_diskon != None %}
+        <p>Total Diskon : {{total_diskon}}</p>
+        {% else %}
+        <p>Total Diskon : -</p>
+{% endif %}
 <p>Biaya Pengantaran : </p> 
-<p>Total Biaya : </p>
-<p>Jenis Pembayaran : </p>
+<p>Total Biaya : {{total_biaya}}</p>
+<p>Jenis Pembayaran : {{metode_pembayaran}}</p>
 
 <br>
 <p>Status Pembayaran : Berhasil</p>
