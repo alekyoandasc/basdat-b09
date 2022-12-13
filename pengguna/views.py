@@ -193,6 +193,7 @@ def logout_pengguna(request):
       response = HttpResponseRedirect(reverse('index'))
       response.delete_cookie('user_name')
       response.delete_cookie('user_email')
+      response.delete_cookie('email')
       response.delete_cookie('user_type')
       return response
 
