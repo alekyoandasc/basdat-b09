@@ -465,7 +465,6 @@ def detail_promo_restoran(request, pid):
 def tambah_promo_restoran(request):
     context = {}
 
-
     with connection.cursor() as cursor:
         cursor.execute(
                 """

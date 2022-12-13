@@ -8,24 +8,28 @@
 <div class="container">
     <h3 class="text-center mb-3">FORM UBAH TARIF PENGIRIMAN PER KM</h3>
     {% comment %} Parameter kedua diganti, yaitu "1" diganti item.pk {% endcomment %}
-    <form method="post" action="{% url 'tarif_pengiriman_per_km:update' 1 %}">
+    <form method="post" action="{% url 'tarif_pengiriman_per_km:update' transaction.id %}">
         {% csrf_token %}
         <div class="form-group">
             <label for="provinsi">Provinsi: </label>
-            <input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="<nama provinsi awal>" disabled>
+            <input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="{{ transaction.province }}" disabled>
         </div>
         <div class="form-group">
             <label for="tarif_motor">Tarif Motor: </label>
-            <input type="number" min="2000" max="7000" class="form-control" id="tarif_motor" name="tarif_motor" placeholder="<tarif motor awal>" required>
+            <input type="number" class="form-control" id="tarif_motor" name="tarif_motor" placeholder="{{ transaction.motorfee }}" required>
         </div>
         <div class="form-group">
             <label for="tarif_mobil">Tarif Mobil: </label>
-            <input type="number" min="2000" max="7000" class="form-control" id="tarif_mobil" name="tarif_mobil" placeholder="<tarif mobil awal>" required>
+            <input type="number" class="form-control" id="tarif_mobil" name="tarif_mobil" placeholder="{{ transaction.carfee }}" required>
         </div>
-        {% if message %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            </ul>
         {% endif %}
         <br>
         <div class="d-flex justify-content-center">
