@@ -153,6 +153,7 @@ def login_pengguna(request):
                         row = cursor.fetchone()
                         if row is not None:
                               response.set_cookie('user_type', 'admin')
+                              response.set_cookie('email', email)
                               return response
 
                         cursor.execute(f"""
@@ -163,6 +164,7 @@ def login_pengguna(request):
                         row = cursor.fetchone()
                         if row is not None:
                               response.set_cookie('user_type', 'customer')
+                              response.set_cookie('email', email)
                               return response
 
                         cursor.execute(f"""
@@ -173,6 +175,7 @@ def login_pengguna(request):
                         row = cursor.fetchone()
                         if row is not None:
                               response.set_cookie('user_type', 'resto')
+                              response.set_cookie('email', email)
                               return response
                         
                         cursor.execute(f"""
