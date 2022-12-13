@@ -10,23 +10,18 @@
 <table class="table">
     <tr>
         <th>No</th>
-        <th>Nama - Cabang restoran</th>
-        <th>Promo berlangsung</th>
+        <!-- <th>Restoran</th> -->
+        <th>Waktu Pesanan Dibuat</th>
         <th>Aksi</th>
     </tr>
     
-    {% for restoran in restaurant_data %}
+    {% for pesanan in pesanan_data %}
     <tr>
         <td>{{ forloop.counter }}</td>
-        <td>{{restoran.0}} - {{restoran.1}}</td>
-        {% if restoran.12 != None %}
-        <td>{{restoran.12}}</td>
-        {% else %}
-        <td>-</td>
-        {% endif %}
-        <td><form action="{% url 'show_pemilihan_makanan' restoran.0 restoran.1 %}" method="post">
+        <td>{{pesanan.1}}</td>
+        <td><form action="{% url 'show_pesanan' pesanan.1 %}" method="post">
             {% csrf_token %}
-            <input class="btn btn-primary" type="submit" value="[Pilih]">
+            <input class="btn btn-primary" type="submit" value="Detail">
             </form></td>
     </tr>
     {% endfor%}

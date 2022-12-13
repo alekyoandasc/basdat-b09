@@ -1,46 +1,65 @@
-from django.shortcuts import render
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # from django.shortcuts import connection
+from django.db import connection, transaction
+from collections import namedtuple
+from django.contrib import messages
+from .utils import *
+
 
 # Create your views here.
+
 def lihat_saldo(request):
-      # index(request)
-      # cursor = connection.cursor()
-      if request.session.get('role') == "":
-            role = request.session.get('role')
-            # email = request.session.get('email')
-            # response = {'email':email, 'role':role}
-            # return render(request, 'index.html', response)
-      role = ""
-      return render(request, 'lihat_saldo.html', {'role':role})
+      result = {}
+
+      if request.COOKIES['user_type'] == 'admin' or request.COOKIES['user_type'] == 'resto' or request.COOKIES['user_type'] == 'customer' or request.COOKIES['user_type'] == 'courier':
+            with connection.cursor() as cursor:
+                  cursor.execute("SET SEARCH_PATH TO SIREST")
+                  cursor.execute("""
+                        SELECT restopay FROM TRANSACTION_ACTOR LIMIT 1;
+                  """)
+                  result['query1'] = namedtuplefetchall(cursor)
+
+      return render(request, 'lihat_saldo.html', result)
 
 def add_saldo(request):
-      if request.session.get('role') == "":
-            role = request.session.get('role')
-            # with connection.cursor() as c:
-            #       c.execute("")
-            #       c.execute("")
-            # response = {'hasil' : hasil}
-            # return render(request, 'lihat_saldo.html', response)
-      role = ""
-      return render(request, 'isi_saldo.html', {'role':role})
+      result = {}
+
+      with connection.cursor() as cursor:
+            cursor.execute("SET SEARCH_PATH TO SIREST")
+            cursor.execute("SELECT restopay FROM TRANSACTION_ACTOR LIMIT 1")
+            result['query1'] = namedtuplefetchall(cursor)
+            cursor.execute("SELECT DISTINCT bankname, accountno FROM TRANSACTION_ACTOR")
+            result['query2'] = namedtuplefetchall(cursor)
+
+      return render(request, 'isi_saldo.html', result)
+
+def validation_add_saldo(request):
+      data_saldo = {
+
+      }
 
 def tarik_saldo(request):
-      if request.session.get('role') == "":
-            role = request.session.get('role')
-            # with connection.cursor() as c:
-            #       c.execute("")
-            #       c.execute("")
-            # response = {'hasil' : hasil}
-            # return render(request, 'lihat_saldo.html', response)
-      role = ""
-      return render(request, 'tarik_saldo.html', {'role':role})
+      result = {}
 
-def validate_saldo(request):
-      if request.session.get('role') == "":
-            data_saldo = {
-                  "saldonow" : request.POST.get("saldo"),
-                  "nominalisi": request.POST.get("nominal"),
-                  "bname": request.POST.get("bank_name"),
-                  "norek": request.POST.get("no_rek")
-            }
+      with connection.cursor() as cursor:
+            cursor.execute("SET SEARCH_PATH TO SIREST")
+            cursor.execute("""
+                        SELECT restopay
+                        FROM TRANSACTION_ACTOR LIMIT 1;
+            """)
+            result['query1'] = namedtuplefetchall(cursor)
+            cursor.execute("""
+                  SELECT DISTINCT bankname, accountno FROM TRANSACTION_ACTOR;
+            """)
+            result['query2'] = namedtuplefetchall(cursor)
+
+      return render(request, 'tarik_saldo.html', result)
+
+# def validate_saldo(request):
+#       if request.session.get('role') == "":
+#             data_saldo = {
+#                   "saldonow" : request.POST.get("saldo"),
+#                   "nominalisi": request.POST.get("nominal"),
+#                   "bname": request.POST.get("bank_name"),
+#                   "norek": request.POST.get("no_rek")
+#             }

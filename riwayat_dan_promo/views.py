@@ -40,7 +40,7 @@ def riwayat_transaksi(request):
                     FROM SIREST.TRANSACTION_HISTORY TH
                     NATURAL JOIN SIREST.TRANSACTION T
                     NATURAL JOIN SIREST.TRANSACTION_FOOD TF
-                    NATURAL JOIN SIREST.RESTAURANT R
+                    JOIN SIREST.RESTAURANT R USING (RNAME, RBRANCH)
                     JOIN SIREST.USER_ACC U ON U.email = T.CourierId
                     JOIN SIREST.USER_ACC U2 ON U2.email = T.email
                     JOIN SIREST.TRANSACTION_STATUS TS ON TH.Tsid = TS.id

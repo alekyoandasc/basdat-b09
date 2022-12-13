@@ -15,8 +15,10 @@
     <form method="post" action="{% url 'read' %}">
         {% csrf_token %}
         <div class="form-group">
-            <label for="hari">Hari: {{hari}}</label>
-            <input type="text" class="form-control" id="day" name="day" placeholder="-" disabled>
+            {% for hari in query %}
+            <label for="hari">Hari: {{hari.hari}}</label>
+            <!-- <input type="text" class="form-control" id="day" name="day" placeholder="-" disabled> -->
+            {% endfor %}
         </div>
 
         <div class="form-group">
