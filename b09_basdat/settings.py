@@ -99,9 +99,9 @@ else:
     
     PGDATABASE = 'railway'
     PGUSER = 'postgres'
-    PGPASSWORD = 'K4AVMGV2sFkIyQIop39z'
-    PGHOST = 'containers-us-west-53.railway.app'
-    PGPORT = '6086'
+    PGPASSWORD = 'hxduGU27phngDi3yMLGr'
+    PGHOST = 'containers-us-west-67.railway.app'
+    PGPORT = '5910'
 
 DATABASES = {
     # 'default': {
